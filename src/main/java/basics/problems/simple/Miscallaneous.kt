@@ -22,19 +22,28 @@ import java.util.*
  * 2.  Return null if solution not found
  */
 
-fun pairAddingUpTo(array: Array<Int>, sum: Int): Optional<Array<Int>> {
+fun pairAddingUpToBruteForce(array: Array<Int>, sum: Int): Optional<Array<Int>> {
     val empty = Optional.empty<Array<Int>>()
-    if(array.isNullOrEmpty()) {
+    if(array.isNullOrEmpty() || array.size == 1) {
         return empty;
     }
 
-    return Optional.of(array)
+    for(i in 1 until array.size){
+        for (j in i until array.size) {
+            if(array[i] + array[j] == sum) {
+                return Optional.of(arrayOf(i, j))
+            }
+        }
+    }
+    return empty
 }
 
 
 /********************  TESTS ******************************/
 fun main() {
+//    pairAddingUpTo(arrayOf(5, 2, 6, 3, 1), 9)
     Tests.runAll()
+    println("Tests Passed!")
 }
 
 class Tests {
@@ -42,11 +51,23 @@ class Tests {
         fun runAll() {
             val tests = Tests()
             tests.`should return null if input array is empty`()
+            tests.`should return null if input array is has one element`()
+            tests.`should return the index of two numbers that add up to the sum`()
         }
     }
 
+    fun `should return null if input array is has one element`() {
+        val result = pairAddingUpToBruteForce(arrayOf(1), 9)
+        assertEquals(Optional.empty<Array<Int>>(), result)
+    }
+
     fun `should return null if input array is empty`() {
-        val result = pairAddingUpTo(emptyArray(), 9)
-        assertEquals(OptionalInt.empty(), result)
+        val result = pairAddingUpToBruteForce(emptyArray(), 9)
+        assertEquals(Optional.empty<Array<Int>>(), result)
+    }
+
+    fun `should return the index of two numbers that add up to the sum`() {
+        val result = pairAddingUpToBruteForce(arrayOf(5, 2, 6, 3, 1), 9)
+        assertArrayEquals(arrayOf(2, 3), result.get())
     }
 }
