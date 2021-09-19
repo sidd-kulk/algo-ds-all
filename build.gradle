@@ -15,6 +15,9 @@ dependencies {
     implementation 'org.junit.jupiter:junit-jupiter:5.7.0'
     'org.junit.jupiter:junit-jupiter-api:5.7.0'
     'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+    // https://mvnrepository.com/artifact/com.github.dpaukov/combinatoricslib3
+    implementation group: 'com.github.dpaukov', name: 'combinatoricslib3', version: '3.3.0'
+
 }
 
 test {
