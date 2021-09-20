@@ -40,24 +40,20 @@ fun pairAddingUpToBruteForce(array: Array<Int>, sum: Int): Optional<Array<Int>> 
 }
 
 
-fun nPairAddingUpTo(array: Array<Int>, nPair: Int, sum: Int): Optional<List<Int>> {
+fun nPairAddingUpTo(a: Array<Int>, nPair: Int, sum: Int): List<Int> {
     /**
      * [5, 6, 1, 2, 8, 3], 4, 14 ==> 1,2,8,3
      */
 
-    if (array.isEmpty() || nPair == 0 || nPair > array.size) {
-        return Optional.empty()
+    if (a.isEmpty() || nPair <= 0 || nPair > a.size) {
+        return emptyList()
     }
-    val allCombinations: List<MutableList<Int>> = combinations(array, nPair)
-    val result = allCombinations.filter { it.sum() == sum }
-    println(result)
-    return if(result.isNotEmpty()) Optional.of(result.first()) else Optional.empty()
+    val list = a.distinct()
+    return combinations(list, nPair).first { it.sum() == sum }
 }
 
-fun factorial(n: Int): Int = if (n < 1) 1 else (1..n).reduce { acc, num -> acc * num }
-fun numberOfCombinations(n: Int, r: Int): Int = factorial(n) / (factorial(r) * factorial(n - r))
-fun combinations(numbers: Array<Int>, k: Int): List<MutableList<Int>> {
-    return Generator.combination(*numbers).simple(k).toList()
+fun combinations(numbers: List<Int>, k: Int): List<MutableList<Int>> {
+    return Generator.combination(numbers).simple(k).toList()
 }
 
 
@@ -68,7 +64,7 @@ fun main() {
 //    println(numberOfCombinations(10, 7))
 //    println("Tests Passed!")
 //    println(combinations(arrayOf(5, 2, 6, 3, 1), 2))
-    nPairAddingUpTo(arrayOf(5, 6, 1, 2, 8, 3), 4, 14).ifPresent(System.out::println)
+    println(nPairAddingUpTo(arrayOf(5, 6, 1, 2, 8, 3, 2, 34, 66, 23, 55, 64, 31, 77), 3, 77))
 }
 
 class Tests {
