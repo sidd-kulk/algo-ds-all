@@ -3,6 +3,7 @@ package basics.problems.simple
 import org.junit.jupiter.api.Assertions.*
 import java.util.*
 import org.paukov.combinatorics3.Generator;
+import kotlin.math.abs
 
 /**
  * Given an array of positive integers, find the index of a pair of numbers that add up
@@ -39,6 +40,21 @@ fun pairAddingUpToBruteForce(array: Array<Int>, sum: Int): Optional<Array<Int>> 
     return empty
 }
 
+fun pairAddingupOptimized(array: Array<Int>, sum: Int): Array<Int> { //5, 2, 6, 3, 1
+    val map = mutableMapOf<Int, Int>();
+    for(i in array.indices){
+        val ntf = sum - array[i]
+        if(map.containsKey(array[i])) {
+            return arrayOf(map[array[i]]!!, i )
+        }
+        map[ntf] = i
+        println(map)
+        continue
+    }
+
+    return emptyArray();
+}
+
 
 fun nPairAddingUpTo(a: Array<Int>, nPair: Int, sum: Int): List<Int> {
     /**
@@ -64,7 +80,8 @@ fun main() {
 //    println(numberOfCombinations(10, 7))
 //    println("Tests Passed!")
 //    println(combinations(arrayOf(5, 2, 6, 3, 1), 2))
-    println(nPairAddingUpTo(arrayOf(5, 6, 1, 2, 8, 3, 2, 34, 66, 23, 55, 64, 31, 77), 3, 77))
+//    println(nPairAddingUpTo(arrayOf(5, 6, 1, 2, 8, 3, 2, 34, 66, 23, 55, 64, 31, 77), 3, 77))
+    println(Arrays.toString(pairAddingupOptimized(arrayOf(5, 2, 6, 3, 1), 9)))
 }
 
 class Tests {
