@@ -6,12 +6,12 @@ import kotlin.math.min
 
 //https://leetcode.com/problems/container-with-most-water/
 
-fun waterFillingBarChart(inputArray: Array<Int>){
+fun waterFillingBarChart(inputArray: Array<Int>) {
     var waters = 0
-    for(i in inputArray.indices) {
-        for(j in i+1 until inputArray.size){
+    for (i in inputArray.indices) {
+        for (j in i + 1 until inputArray.size) {
             val w = min(inputArray[i], inputArray[j]) * abs(j - i)
-            if(w > waters) {
+            if (w > waters) {
                 waters = w
             }
         }
@@ -22,22 +22,44 @@ fun waterFillingBarChart(inputArray: Array<Int>){
 fun waterFillingBarChartOptimized(heights: IntArray): Int {
     var maxArea = 0
     var leftPointer = 0
-    var rightPointer = heights.size-1
-    while(leftPointer < rightPointer) {
+    var rightPointer = heights.size - 1
+    while (leftPointer < rightPointer) {
         val area = min(heights[leftPointer], heights[rightPointer]) * (rightPointer - leftPointer)
         maxArea = max(area, maxArea)
-        if(heights[leftPointer] <= heights[rightPointer]){
+        if (heights[leftPointer] <= heights[rightPointer]) {
             leftPointer++
-        }else{
+        } else {
             rightPointer--
         }
     }
     return maxArea
 }
 
+// https://leetcode.com/problems/unique-email-addresses
+fun uniqueEmailAddresses(emails: Array<String>): Int {
+    var map = mutableMapOf<String, Any>()
+    var counter = 0
+    for (email in emails) {
+        val split = email.split("@")
+        val dotReplacedEmail = split[0].replace(".", "")
+        val indexOfPlus = dotReplacedEmail.indexOf("+")
+        val plusIgnoredEmail = if (indexOfPlus > 0) {
+            dotReplacedEmail.substring(IntRange(0, indexOfPlus - 1))
+        } else {
+            dotReplacedEmail
+        }
+        val key = plusIgnoredEmail.plus("@").plus(split[1])
+        if (!map.containsKey(key)) {
+            map[key] = ++counter
+        }
+    }
+    return counter
+}
+
 
 fun main() {
 //    waterFillingBarChart(arrayOf(7,1,2,3,9))
-    println(waterFillingBarChartOptimized(intArrayOf(7,1,2,3,9)))
-    println(waterFillingBarChartOptimized(intArrayOf(1,4,6,5,3,7,6)))
+//    println(waterFillingBarChartOptimized(intArrayOf(7, 1, 2, 3, 9)))
+//    println(waterFillingBarChartOptimized(intArrayOf(1, 4, 6, 5, 3, 7, 6)))
+    println(uniqueEmailAddresses(arrayOf("test.email+alex@leetcode.com","test.email.leet+alex@code.com")))
 }
