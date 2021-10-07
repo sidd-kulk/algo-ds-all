@@ -82,6 +82,33 @@ fun trappedWater(heights: Array<Int>): Int {
     return totalWater
 }
 
+fun trappedWaterOptimized(heights: Array<Int>): Int {
+    var totalWater = 0
+    var leftPointer = 0
+    var rightPointer = heights.size - 1
+    var maxRight = 0
+    var maxLeft = 0
+
+    while(rightPointer - leftPointer >= 1){
+        if(heights[leftPointer] <= heights[rightPointer]){
+            if(heights[leftPointer] > maxLeft) {
+                maxLeft = heights[leftPointer]
+            } else {
+                totalWater += (maxLeft - heights[leftPointer])
+            }
+            leftPointer ++
+        } else {
+            if(heights[rightPointer] > maxRight){
+                maxRight = heights[rightPointer]
+            } else {
+                totalWater += maxRight - heights[rightPointer]
+            }
+            rightPointer --
+        }
+    }
+    return totalWater
+}
+
 
 fun main() {
 //    waterFillingBarChart(arrayOf(7,1,2,3,9))
@@ -89,4 +116,5 @@ fun main() {
 //    println(waterFillingBarChartOptimized(intArrayOf(1, 4, 6, 5, 3, 7, 6)))
 //    println(uniqueEmailAddresses(arrayOf("test.email+alex@leetcode.com","test.email.leet+alex@code.com")))
     println(trappedWater(arrayOf(0,1,0,2,1,0,3,1,0,1,2)))
+    println(trappedWaterOptimized(arrayOf(0,1,0,2,1,0,3,1,0,1,2)))
 }
