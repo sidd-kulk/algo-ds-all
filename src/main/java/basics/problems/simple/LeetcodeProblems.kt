@@ -3,9 +3,10 @@ package basics.problems.simple
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
+import kotlin.time.ExperimentalTime
+import kotlin.time.measureTimedValue
 
 //https://leetcode.com/problems/container-with-most-water/
-
 fun waterFillingBarChart(inputArray: Array<Int>) {
     var waters = 0
     for (i in inputArray.indices) {
@@ -19,6 +20,7 @@ fun waterFillingBarChart(inputArray: Array<Int>) {
     println(waters)
 }
 
+//https://leetcode.com/problems/container-with-most-water/
 fun waterFillingBarChartOptimized(heights: IntArray): Int {
     var maxArea = 0
     var leftPointer = 0
@@ -56,7 +58,7 @@ fun uniqueEmailAddresses(emails: Array<String>): Int {
     return counter
 }
 
-
+// https://leetcode.com/problems/trapping-rain-water/submissions/
 fun trappedWater(heights: Array<Int>): Int {
     //println(trappedWater(arrayOf(0,1,0,2,1,0,3,1,0,1,2)))
     var totalWater = 0
@@ -82,6 +84,7 @@ fun trappedWater(heights: Array<Int>): Int {
     return totalWater
 }
 
+// https://leetcode.com/problems/trapping-rain-water/submissions/
 fun trappedWaterOptimized(heights: Array<Int>): Int {
     var totalWater = 0
     var leftPointer = 0
@@ -89,7 +92,7 @@ fun trappedWaterOptimized(heights: Array<Int>): Int {
     var maxRight = 0
     var maxLeft = 0
 
-    while(rightPointer - leftPointer >= 1){
+    while(rightPointer > leftPointer){
         if(heights[leftPointer] <= heights[rightPointer]){
             if(heights[leftPointer] > maxLeft) {
                 maxLeft = heights[leftPointer]
