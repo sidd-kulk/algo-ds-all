@@ -57,9 +57,36 @@ fun uniqueEmailAddresses(emails: Array<String>): Int {
 }
 
 
+fun trappedWater(heights: Array<Int>): Int {
+    //println(trappedWater(arrayOf(0,1,0,2,1,0,3,1,0,1,2)))
+    var totalWater = 0
+    for (i in heights.indices) {
+        var maxLeft = 0
+        var leftIndex = i - 1
+        var maxRight = 0
+        var rightIndex = i + 1
+
+        while (leftIndex >= 0) {
+            maxLeft = max(maxLeft, heights[leftIndex--])
+        }
+
+        while (rightIndex < heights.size) {
+            maxRight = max(maxRight, heights[rightIndex++])
+        }
+
+        val waterAbove = min(maxLeft, maxRight) - heights[i]
+        if (waterAbove > 0) {
+            totalWater += waterAbove
+        }
+    }
+    return totalWater
+}
+
+
 fun main() {
 //    waterFillingBarChart(arrayOf(7,1,2,3,9))
 //    println(waterFillingBarChartOptimized(intArrayOf(7, 1, 2, 3, 9)))
 //    println(waterFillingBarChartOptimized(intArrayOf(1, 4, 6, 5, 3, 7, 6)))
-    println(uniqueEmailAddresses(arrayOf("test.email+alex@leetcode.com","test.email.leet+alex@code.com")))
+//    println(uniqueEmailAddresses(arrayOf("test.email+alex@leetcode.com","test.email.leet+alex@code.com")))
+    println(trappedWater(arrayOf(0,1,0,2,1,0,3,1,0,1,2)))
 }
