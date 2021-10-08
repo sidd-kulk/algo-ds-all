@@ -45,7 +45,71 @@ fun typedStringComparison(s: String, t: String): Boolean {
     }
 //    return processBackspaces(s) == processBackspaces(t)
 }
+// https://leetcode.com/problems/backspace-string-compare/
+fun typedStringTwoPointer(s: String, t: String): Boolean {
+    // "aa###b", "b"
+    var sPointer = s.length - 1
+    var tPointer = t.length - 1
+    var tPoundCounter = 0
+    var sPoundCounter = 0
+    var finalResult = true
+    while (sPointer >= 0 || tPointer >= 0) {
+        var sx: Char
+        var tx: Char
+        var isCompareS = false
+        var isCompareT = false
+
+        if (sPointer >= 0) {
+            sx = s[sPointer]
+            if (sx == '#') {
+                sPoundCounter++
+                sPointer--
+            } else {
+                if (sPoundCounter > 0) {
+                    sPoundCounter--
+                    sPointer--
+                } else {
+                    isCompareS = true
+                }
+            }
+        } else {
+            isCompareS = true
+            sx = ' '
+        }
+
+        if (tPointer >= 0) {
+            tx = t[tPointer]
+            if (tx == '#') {
+                tPoundCounter++
+                tPointer--
+            } else {
+                if (tPoundCounter > 0) {
+                    tPoundCounter--
+                    tPointer--
+                } else {
+                    isCompareT = true
+                }
+            }
+        } else {
+            isCompareT = true
+            tx = ' '
+        }
+
+        if (isCompareS && isCompareT) {
+            if (sx != tx) {
+                finalResult = false
+                break
+            } else {
+                sPointer--
+                tPointer--
+                continue
+            }
+        }
+
+    }
+    return finalResult
+}
 
 fun main() {
-    println(typedStringComparison("a###b", "b"))
+    println(typedStringTwoPointer("aaaa###b", "b"))
 }
