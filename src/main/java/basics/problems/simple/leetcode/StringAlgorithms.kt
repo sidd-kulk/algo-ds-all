@@ -1,6 +1,7 @@
 package basics.problems.simple.leetcode
 
 import java.util.*
+import kotlin.math.max
 
 // https://leetcode.com/problems/backspace-string-compare/
 fun typedStringComparison(s: String, t: String): Boolean {
@@ -110,6 +111,32 @@ fun typedStringTwoPointer(s: String, t: String): Boolean {
     return finalResult
 }
 
+
+// https://leetcode.com/problems/longest-substring-without-repeating-characters/
+fun longestSubStringwithoutRepeatingCharactersBruteForce(input: String): Int {
+    // aabcdabcde
+    var maxCount = 0
+    if(input.isEmpty() || input.length == 1) {
+        maxCount = input.length
+        return maxCount
+    }
+    var counter = 1
+    for(i in input.indices) {
+        val set = mutableSetOf<Char>(input[i])
+        maxCount = max(counter, maxCount)
+        counter = 1
+        for(j in i+1 until input.length) {
+            if(set.contains(input[j])){
+                break
+            } else {
+                set.add(input[j])
+                counter ++
+            }
+        }
+    }
+    return maxCount
+}
+
 fun main() {
-    println(typedStringTwoPointer("aaaa###b", "b"))
+    println(longestSubStringwithoutRepeatingCharactersBruteForce("au"))
 }
