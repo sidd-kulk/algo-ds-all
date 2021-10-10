@@ -46,6 +46,7 @@ fun typedStringComparison(s: String, t: String): Boolean {
     }
 //    return processBackspaces(s) == processBackspaces(t)
 }
+
 // https://leetcode.com/problems/backspace-string-compare/
 fun typedStringTwoPointer(s: String, t: String): Boolean {
     // "aa###b", "b"
@@ -114,23 +115,23 @@ fun typedStringTwoPointer(s: String, t: String): Boolean {
 
 // https://leetcode.com/problems/longest-substring-without-repeating-characters/
 fun longestSubStringwithoutRepeatingCharactersBruteForce(input: String): Int {
+    if (input.length <= 1) {
+        return input.length
+    }
     // aabcdabcde
     var maxCount = 0
-    if(input.isEmpty() || input.length == 1) {
-        maxCount = input.length
-        return maxCount
-    }
-    var counter = 1
-    for(i in input.indices) {
+    var counter = 0
+    for (i in input.indices) {
+        if (maxCount >= input.length - i + 1) break
         val set = mutableSetOf<Char>(input[i])
         maxCount = max(counter, maxCount)
         counter = 1
-        for(j in i+1 until input.length) {
-            if(set.contains(input[j])){
+        for (j in i + 1 until input.length) {
+            if (set.contains(input[j])) {
                 break
             } else {
                 set.add(input[j])
-                counter ++
+                counter++
             }
         }
     }
@@ -138,5 +139,39 @@ fun longestSubStringwithoutRepeatingCharactersBruteForce(input: String): Int {
 }
 
 fun main() {
-    println(longestSubStringwithoutRepeatingCharactersBruteForce("au"))
+    println(longestSubStringWithoutRepeatingCharactersSlidingWindow("bbbbb"))
+}
+
+/**
+ * p w
+|
+ * longest = 4
+ * current = 4
+ * {
+ *    p
+ *    w
+ * }
+ *
+ */
+
+fun longestSubStringWithoutRepeatingCharactersSlidingWindow(input: String): Int {
+    // a b c a b c b b
+    if (input.length <= 1) return input.length
+
+    var leftPointer = 0
+    var longest = 0
+    val map = mutableMapOf<Char, Int>()
+    var currentLongest = 0
+
+    for (rightPointer in input.indices) {
+        val lastChar = input[rightPointer]
+        val lastIndex = map.getOrElse(lastChar) { -1 }
+        if (lastIndex >= leftPointer) {
+            leftPointer = lastIndex + 1
+        }
+        map[lastChar] = rightPointer
+        longest = max(longest, rightPointer - leftPointer + 1)
+    }
+
+    return longest
 }
