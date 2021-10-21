@@ -139,20 +139,9 @@ fun longestSubStringwithoutRepeatingCharactersBruteForce(input: String): Int {
 }
 
 fun main() {
-    println(longestSubStringWithoutRepeatingCharactersSlidingWindow("bbbbb"))
+    println(isPalindrome("A man, a plan, a canal: Panama"))
+//    println(' '.isLetterOrDigit())
 }
-
-/**
- * p w
-|
- * longest = 4
- * current = 4
- * {
- *    p
- *    w
- * }
- *
- */
 
 fun longestSubStringWithoutRepeatingCharactersSlidingWindow(input: String): Int {
     // a b c a b c b b
@@ -174,4 +163,36 @@ fun longestSubStringWithoutRepeatingCharactersSlidingWindow(input: String): Int 
     }
 
     return longest
+}
+
+//https://leetcode.com/problems/valid-palindrome/
+fun isPalindrome(str: String): Boolean {
+    var leftPointer = 0
+    var rightPointer = str.length - 1
+    while(leftPointer < rightPointer) {
+        var nonAlphanumericEncountered = false
+        if(!str[leftPointer].isLetterOrDigit()){
+            leftPointer ++
+            nonAlphanumericEncountered = true
+        }
+
+        if(!str[rightPointer].isLetterOrDigit()){
+            rightPointer --
+            nonAlphanumericEncountered = true
+        }
+
+        if(!nonAlphanumericEncountered) {
+            if(str[leftPointer].equals(str[rightPointer], ignoreCase = true)){
+                leftPointer ++
+                rightPointer --
+                continue
+            } else {
+                return false
+            }
+        } else {
+            continue
+        }
+
+    }
+    return true
 }
