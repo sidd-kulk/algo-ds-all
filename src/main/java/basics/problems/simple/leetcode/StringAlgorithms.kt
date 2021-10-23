@@ -139,8 +139,20 @@ fun longestSubStringwithoutRepeatingCharactersBruteForce(input: String): Int {
 }
 
 fun main() {
-    println(isPalindrome("A man, a plan, a canal: Panama"))
+    println(PalindromeQuestions.isAlmostAPalindrome("abadx"))
+//    println(PalindromeQuestions.isPalindromeStraightForward("aguokepatgbnvfqmgmlcupuufxoohdfpgjdmysgvhmvffcnqxjjxqncffvmhvgsymdjgpfdhooxfuupuclmgmqfvnbgtapekouga"))
+//    println("aguokepatgbnvfqmgml".reversed() == "lmgmqfvnbgtapekouga")
+//    val regex = "[\\W_]".toRegex()
+//    println(regex.replace("avc&&0**9", ""));
 //    println(' '.isLetterOrDigit())
+//    println(PalindromeQuestions.isPalindromeStraightForward("aguokepatgbnvfqmgmlcupuufxoohdfpgjdmysgvhmvffcnqxjjxqncffvmhvgsymdjgpfdhooxfuupuclmgmqfvnbgtapekouga"))
+    val str = "aguokepatgbnvfqmgmlcupuufxoohdfpgjdmysgvhmvffcnqxjjxqncffvmhvgsymdjgpfdhooxfuupuculmgmqfvnbgtapekouga";
+//    println(str[80])
+//    println(str[81])
+//    println(str[82])
+//    val str1 = str.removeRange(IntRange(81, 81))
+//    println(str1)
+//    println(PalindromeQuestions.isPalindromeStraightForward(str1))
 }
 
 fun longestSubStringWithoutRepeatingCharactersSlidingWindow(input: String): Int {
@@ -165,34 +177,66 @@ fun longestSubStringWithoutRepeatingCharactersSlidingWindow(input: String): Int 
     return longest
 }
 
+
 //https://leetcode.com/problems/valid-palindrome/
-fun isPalindrome(str: String): Boolean {
-    var leftPointer = 0
-    var rightPointer = str.length - 1
-    while(leftPointer < rightPointer) {
-        var nonAlphanumericEncountered = false
-        if(!str[leftPointer].isLetterOrDigit()){
-            leftPointer ++
-            nonAlphanumericEncountered = true
-        }
-
-        if(!str[rightPointer].isLetterOrDigit()){
-            rightPointer --
-            nonAlphanumericEncountered = true
-        }
-
-        if(!nonAlphanumericEncountered) {
-            if(str[leftPointer].equals(str[rightPointer], ignoreCase = true)){
-                leftPointer ++
-                rightPointer --
-                continue
-            } else {
-                return false
+object PalindromeQuestions {
+    fun isPalindrome(str: String): Boolean {
+        var leftPointer = 0
+        var rightPointer = str.length - 1
+        while (leftPointer < rightPointer) {
+            var nonAlphanumericEncountered = false
+            if (!str[leftPointer].isLetterOrDigit()) {
+                leftPointer++
+                nonAlphanumericEncountered = true
             }
-        } else {
-            continue
-        }
 
+            if (!str[rightPointer].isLetterOrDigit()) {
+                rightPointer--
+                nonAlphanumericEncountered = true
+            }
+
+            if (!nonAlphanumericEncountered) {
+                if (str[leftPointer].equals(str[rightPointer], ignoreCase = true)) {
+                    leftPointer++
+                    rightPointer--
+                    continue
+                } else {
+                    println("found false at $leftPointer, ${str[leftPointer]} and $rightPointer, ${str[rightPointer]}")
+                    return false
+                }
+            } else {
+                continue
+            }
+
+        }
+        return true
     }
-    return true
+    fun isPalindromeStraightForward(str: String): Boolean {
+        val regex = "[\\W_]".toRegex()
+        val transformedStr = regex.replace(str, "").toLowerCase();
+        return transformedStr == transformedStr.reversed()
+    }
+
+    fun isAlmostAPalindrome(str: String): Boolean {
+        return if(!isPalindromeStraightForward(str)){
+            val regex = "[\\W_]".toRegex()
+            val transformedStr = regex.replace(str, "").toLowerCase();
+            var leftPointer = 0
+            var rightPointer = transformedStr.length - 1
+            while(leftPointer < rightPointer) {
+                if (transformedStr[leftPointer] == transformedStr[rightPointer]) {
+                    leftPointer ++
+                    rightPointer --
+                    continue
+                } else {
+                    val strLeft = transformedStr.removeRange(IntRange(leftPointer, leftPointer))
+                    val strRight = transformedStr.removeRange(IntRange(rightPointer, rightPointer))
+                    return isPalindromeStraightForward(strLeft) || isPalindromeStraightForward(strRight)
+                }
+            }
+            false
+        } else {
+            true
+        }
+    }
 }
