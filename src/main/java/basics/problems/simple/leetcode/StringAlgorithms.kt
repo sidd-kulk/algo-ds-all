@@ -1,12 +1,11 @@
 package basics.problems.simple.leetcode
 
+import java.lang.RuntimeException
 import java.util.*
 import kotlin.math.max
 
 object PalindromeQuestions {
     //https://leetcode.com/problems/valid-palindrome/
-
-
     fun isPalindrome(str: String): Boolean {
         var leftPointer = 0
         var rightPointer = str.length - 1
@@ -45,7 +44,7 @@ object PalindromeQuestions {
         return transformedStr == transformedStr.reversed()
     }
 
-    fun isAlmostAPalindrome(str: String): Boolean {
+    fun isAlmostAPalindromeOneCharacterOff(str: String): Boolean {
         return if (!isPalindromeStraightForward(str)) {
             val regex = "[\\W_]".toRegex()
             val transformedStr = regex.replace(str, "").toLowerCase();
@@ -67,6 +66,7 @@ object PalindromeQuestions {
             true
         }
     }
+
 }
 
 object TypedStringComparison {
