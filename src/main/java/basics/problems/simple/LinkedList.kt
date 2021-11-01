@@ -44,6 +44,39 @@ fun main() {
 
 class ListNode(var `val`: Int) {
     var next: ListNode? = null
+    override fun toString(): String {
+        var currNode: ListNode? = this
+        val sb = StringBuilder()
+        while(currNode != null) {
+            sb.append("(${currNode.`val`})-->")
+            currNode = currNode.next
+        }
+        return sb.append("null").toString()
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as ListNode
+
+        var thisNode: ListNode? = this
+        var otherNode: ListNode? = other
+
+        while(thisNode != null || otherNode != null){
+            if (thisNode?.`val` != otherNode?.`val`) return false
+
+            thisNode = thisNode?.next
+            otherNode = otherNode?.next
+        }
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return `val`
+    }
+
 }
 
 object Solution {
@@ -79,5 +112,37 @@ object ReverseLinkedList {
         }
 
         return reversedLinkedList
+    }
+}
+
+object MxNReverseList {
+    fun reverse(node: ListNode, m: Int, n: Int): ListNode? {
+        if(m > n) return null
+
+        var currNode: ListNode? = node
+        var counter = 1
+        var beforeLeft: ListNode? = null
+
+        while(counter < m) {
+            beforeLeft = currNode
+            currNode = currNode?.next
+            counter++
+        }
+
+        var prev: ListNode? = null
+        var startLeft: ListNode? = currNode
+
+        while(counter in m..n){
+            val next = currNode?.next
+            currNode?.next = prev
+            prev = currNode
+            currNode = next
+            counter ++
+        }
+
+        beforeLeft?.next = prev
+        startLeft?.next = currNode
+
+        return if(m>1) node else prev
     }
 }
