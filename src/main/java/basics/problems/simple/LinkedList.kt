@@ -179,12 +179,15 @@ fun clone(node: ListNode?): ListNode? {
 
 // https://leetcode.com/problems/palindrome-linked-list/
 object PalindromeLinkedList {
+    fun isIt(node: ListNode?): Boolean {
+        var thisNode = node
+        var otherNode = reverse(clone(node))
+        while (thisNode != null || otherNode != null) {
+            if (thisNode?.`val` != otherNode?.`val`) return false
 
-    fun isIt(n: ListNode?): Boolean {
-
-
-        val reversed = reverse(clone(n))
-
-        TODO()
+            thisNode = thisNode?.next
+            otherNode = otherNode?.next
+        }
+        return true
     }
 }
