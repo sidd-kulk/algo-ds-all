@@ -24,14 +24,31 @@ internal class PalindromeLinkedListTest {
 
     @Test
     fun isIt() {
+        fun `should return false for negative case`() {
+            val node = createLinkedList()
+            assertFalse(PalindromeLinkedList.isIt(node))
+        }
+
+        fun `should return true for list 1 - 3 - 3 - 1`() {
+            var node = ListNode(1)
+            var rootNode = node
+            for(i in arrayOf(3,3,1)){
+                val newNode = ListNode(i)
+                node.next = newNode
+                node = newNode
+            }
+            assertTrue(PalindromeLinkedList.isIt(rootNode))
+        }
+        `should return false for negative case`()
+        `should return true for list 1 - 3 - 3 - 1`()
     }
 
     private fun createLinkedList(size: Int = 5): ListNode? {
-        if(size <= 0) return null
+        if (size <= 0) return null
 
         var firstNode: ListNode? = ListNode(1)
         val rootNode = firstNode
-        for(i in 2..size) {
+        for (i in 2..size) {
             firstNode?.next = ListNode(i)
             firstNode = firstNode?.next
         }
