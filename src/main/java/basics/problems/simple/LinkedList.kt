@@ -7,11 +7,11 @@ class LLinkedList<T>() {
     private var rootNode = NNode<T>()
     fun add(t: T) {
         val nNode = NNode(t)
-        if(rootNode.next == null) {
+        if (rootNode.next == null) {
             rootNode.next = nNode
         } else {
             var currNode: NNode<T>? = rootNode
-            while(currNode?.next != null) {
+            while (currNode?.next != null) {
                 currNode = currNode.next
             }
             currNode?.next = nNode
@@ -21,7 +21,7 @@ class LLinkedList<T>() {
     override fun toString(): String {
         var currNode: NNode<T>? = rootNode
         val sb = StringBuilder()
-        while(currNode != null) {
+        while (currNode != null) {
             sb.append("($currNode)-->")
             currNode = currNode.next
         }
@@ -31,7 +31,7 @@ class LLinkedList<T>() {
 
 class NNode<T>(var data: T? = null, var next: NNode<T>? = null) {
     override fun toString(): String {
-        return if(this.data != null) this.data.toString() else "null"
+        return if (this.data != null) this.data.toString() else "null"
     }
 }
 
@@ -47,7 +47,7 @@ class ListNode(var `val`: Int) {
     override fun toString(): String {
         var currNode: ListNode? = this
         val sb = StringBuilder()
-        while(currNode != null) {
+        while (currNode != null) {
             sb.append("(${currNode.`val`})-->")
             currNode = currNode.next
         }
@@ -63,7 +63,7 @@ class ListNode(var `val`: Int) {
         var thisNode: ListNode? = this
         var otherNode: ListNode? = other
 
-        while(thisNode != null || otherNode != null){
+        while (thisNode != null || otherNode != null) {
             if (thisNode?.`val` != otherNode?.`val`) return false
 
             thisNode = thisNode?.next
@@ -81,11 +81,11 @@ class ListNode(var `val`: Int) {
 
 object Solution {
     fun reverseList(head: ListNode?): ListNode? {
-        if(head?.next == null) return head
+        if (head?.next == null) return head
 
         var cn = head
         var pn: ListNode? = null
-        while(cn != null) {
+        while (cn != null) {
             val nn = cn.next
             cn.next = pn
             pn = cn
@@ -117,13 +117,13 @@ object ReverseLinkedList {
 
 object MxNReverseList {
     fun reverse(node: ListNode, m: Int, n: Int): ListNode? {
-        if(m > n) return null
+        if (m > n) return null
 
         var currNode: ListNode? = node
         var counter = 1
         var beforeLeft: ListNode? = null
 
-        while(counter < m) {
+        while (counter < m) {
             beforeLeft = currNode
             currNode = currNode?.next
             counter++
@@ -132,17 +132,59 @@ object MxNReverseList {
         var prev: ListNode? = null
         var startLeft: ListNode? = currNode
 
-        while(counter in m..n){
+        while (counter in m..n) {
             val next = currNode?.next
             currNode?.next = prev
             prev = currNode
             currNode = next
-            counter ++
+            counter++
         }
 
         beforeLeft?.next = prev
         startLeft?.next = currNode
 
-        return if(m>1) node else prev
+        return if (m > 1) node else prev
+    }
+}
+
+fun reverse(node: ListNode?): ListNode? {
+    if (node == null) return null
+    var currNode: ListNode? = node
+    var prev: ListNode? = null
+
+    while (currNode != null) {
+        val next = currNode.next
+        currNode.next = prev
+        prev = currNode
+        currNode = next
+    }
+
+    return prev
+}
+
+fun clone(node: ListNode?): ListNode? {
+    if (node == null) return null
+
+    var currNode: ListNode? = node.next
+    var newListNode: ListNode = ListNode(node.`val`)
+    val start = newListNode
+    while (currNode != null) {
+        val nextNode: ListNode = ListNode(currNode!!.`val`)
+        newListNode.next = nextNode
+        currNode = currNode?.next
+        newListNode = nextNode
+    }
+    return start
+}
+
+// https://leetcode.com/problems/palindrome-linked-list/
+object PalindromeLinkedList {
+
+    fun isIt(n: ListNode?): Boolean {
+
+
+        val reversed = reverse(clone(n))
+
+        TODO()
     }
 }
