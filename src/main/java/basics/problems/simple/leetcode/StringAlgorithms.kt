@@ -228,3 +228,14 @@ object LongestSubsString {
         return longest
     }
 }
+
+object ReverseString {
+    fun doItRecursive(input: String): String {
+        if(input.length == 1) return input
+
+        val first = input.dropLast(input.length - 1)
+        val rest = input.drop(1)
+
+        return doItRecursive(rest) + first
+    }
+}
