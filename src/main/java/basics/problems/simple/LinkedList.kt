@@ -194,7 +194,7 @@ object PalindromeLinkedList {
 
 // https://leetcode.com/problems/linked-list-cycle/
 object CycleDetection {
-    fun detect(head: ListNode?): Boolean {
+    fun detectBruteForce(head: ListNode?): Boolean {
         if(head == null || head.next == null) return false
         val hashset = mutableSetOf<ListNode>()
         var currNode: ListNode? = head
@@ -205,6 +205,17 @@ object CycleDetection {
                 hashset.add(currNode)
                 currNode = currNode.next
             }
+        }
+        return false
+    }
+    fun detectUsingFloydsAlgorithm(head: ListNode?): Boolean {
+        if(head == null || head.next == null) return false
+        var tortoise: ListNode? = head
+        var hare: ListNode? = head.next
+        while(hare != null) {
+            if(tortoise == hare) return true
+            tortoise = tortoise?.next
+            hare = hare?.next?.next
         }
         return false
     }
