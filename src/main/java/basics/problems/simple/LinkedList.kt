@@ -191,3 +191,21 @@ object PalindromeLinkedList {
         return true
     }
 }
+
+// https://leetcode.com/problems/linked-list-cycle/
+object CycleDetection {
+    fun detect(head: ListNode?): Boolean {
+        if(head == null || head.next == null) return false
+        val hashset = mutableSetOf<ListNode>()
+        var currNode: ListNode? = head
+        while(currNode != null) {
+            if(hashset.contains(currNode)) {
+                return true
+            } else {
+                hashset.add(currNode)
+                currNode = currNode.next
+            }
+        }
+        return false
+    }
+}
