@@ -7,8 +7,9 @@ internal class ParenthesisValidationTest {
 
     @Test
     fun `should return true if parenthesis are balanced`() {
-        val input = "[{}]"
-        Assertions.assertTrue(ParenthesisValidation.validate(input))
+        Assertions.assertTrue(ParenthesisValidation.validate("[{}]"))
+        Assertions.assertTrue(ParenthesisValidation.validate("{(){}}"))
+        Assertions.assertTrue(ParenthesisValidation.validate("[({}()){}[()]]"))
     }
 
     @Test
@@ -16,5 +17,6 @@ internal class ParenthesisValidationTest {
         Assertions.assertFalse(ParenthesisValidation.validate("[{(}]"))
         Assertions.assertFalse(ParenthesisValidation.validate("(}]"))
         Assertions.assertFalse(ParenthesisValidation.validate("}}}]](}]"))
+        Assertions.assertFalse(ParenthesisValidation.validate("["))
     }
 }
