@@ -9,13 +9,13 @@ object ParenthesisValidation {
         val leftBrackets = "[{("
         val rightBrackets = "]})"
         val map = mapOf<Char, Char>(Pair(']', '['), Pair('}', '{'), Pair(')', '('))
-        for(c in str){
-            if(leftBrackets.contains(c)){
+        for (c in str) {
+            if (leftBrackets.contains(c)) {
                 stack.push(c)
-            } else if(rightBrackets.contains(c)) {
-                if(stack.size > 0){
+            } else if (rightBrackets.contains(c)) {
+                if (stack.size > 0) {
                     val popped = stack.pop()
-                    if(popped != map[c]) {
+                    if (popped != map[c]) {
                         return false
                     }
                 } else {
@@ -24,5 +24,43 @@ object ParenthesisValidation {
             }
         }
         return stack.size == 0
+    }
+}
+
+// https://leetcode.com/problems/minimum-remove-to-make-valid-parentheses/
+object MinimumBracketsRemoval {
+    fun minimumBracketRemoval(input: String): String {
+        if (input.trim() == "") {
+            return ""
+        }
+
+        val stack = Stack<Int>()
+        val rightBracket = ')'
+        val leftBracket = '('
+        val output: StringBuilder = StringBuilder()
+        for (c in input.indices) {
+            val charAt = input[c]
+            if (charAt == leftBracket) {
+                stack.push(c)
+                output.append(charAt)
+            } else if (charAt == rightBracket) {
+                if (stack.size > 0) {
+                    stack.pop()
+                    output.append(charAt)
+                } else {
+                    output.append(' ')
+                }
+            } else {
+                output.append(charAt)
+            }
+        }
+
+        val charArray = output.toString().toCharArray()
+        for(index in stack) {
+            charArray[index] = ' '
+        }
+        val filteredArray = charArray.filter { it != ' ' }
+
+        return filteredArray.joinToString(separator = "")
     }
 }
