@@ -63,4 +63,34 @@ object MinimumBracketsRemoval {
 
         return filteredArray.joinToString(separator = "")
     }
+
+    fun minimumBracketRemovalV2(inp: String): String {
+        if (inp.trim() == "") {
+            return ""
+        }
+
+        val stack = Stack<Int>()
+        val rightBracket = ')'
+        val leftBracket = '('
+        val arr = inp.toCharArray()
+        for (c in arr.indices) {
+            val charAt = arr[c]
+            if (charAt == leftBracket) {
+                stack.push(c)
+            } else if (charAt == rightBracket) {
+                if (stack.size > 0) {
+                    stack.pop()
+                } else {
+                    arr[c] = ' '
+                }
+            }
+        }
+
+        while(stack.size > 0) {
+            arr[stack.pop()] = ' '
+        }
+        val filteredArray = arr.filter { it != ' ' }
+
+        return filteredArray.joinToString(separator = "")
+    }
 }
