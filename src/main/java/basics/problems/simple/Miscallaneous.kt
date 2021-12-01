@@ -3,7 +3,9 @@ package basics.problems.simple
 import org.junit.jupiter.api.Assertions.*
 import java.util.*
 import org.paukov.combinatorics3.Generator;
+import kotlin.collections.HashMap
 import kotlin.math.abs
+import kotlin.system.measureTimeMillis
 
 /**
  * Given an array of positive integers, find the index of a pair of numbers that add up
@@ -73,8 +75,32 @@ fun combinations(numbers: List<Int>, k: Int): List<MutableList<Int>> {
 }
 
 fun fibonacci(n: Int): Int {
+    if(n <= 2) return 1
+    else return fibonacci(n - 1) + fibonacci(n - 2)
+}
+
+fun fibonacciDynamicProgramming(n: Int, hm: MutableMap<Int, Int> = mutableMapOf()): Int {
     return if(n <= 2) 1
-    else fibonacci(n - 1) + fibonacci(n - 2)
+    else {
+        var a: Int = 0
+        var b: Int = 0
+        a = if(hm.containsKey(n - 1)){
+            hm[n - 1]!!
+        } else {
+            val ax = fibonacciDynamicProgramming(n - 1, hm)
+            hm[n - 1] = ax
+            ax
+        }
+
+        b = if(hm.containsKey(n - 2)){
+            hm[n - 2]!!
+        } else {
+            val ay = fibonacciDynamicProgramming(n - 2, hm)
+            hm[n - 2] = ay
+            ay
+        }
+        a + b
+    }
 }
 
 /********************  TESTS ******************************/
@@ -85,7 +111,10 @@ fun main() {
 //    println("Tests Passed!")
 //    println(combinations(arrayOf(5, 2, 6, 3, 1), 2))
 //    println(nPairAddingUpTo(arrayOf(5, 6, 1, 2, 8, 3, 2, 34, 66, 23, 55, 64, 31, 77), 3, 77))
-    println(Arrays.toString(pairAddingupOptimized(arrayOf(5, 2, 6, 3, 1), 9)))
+//    println(Arrays.toString(pairAddingupOptimized(arrayOf(5, 2, 6, 3, 1), 9)))
+    val n = 45
+    println(measureTimeMillis { fibonacci(n) })
+    println(measureTimeMillis { fibonacciDynamicProgramming(n) })
 }
 
 class Tests {
