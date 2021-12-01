@@ -72,6 +72,10 @@ fun combinations(numbers: List<Int>, k: Int): List<MutableList<Int>> {
     return Generator.combination(numbers).simple(k).toList()
 }
 
+fun fibonacci(n: Int): Int {
+    return if(n <= 2) 1
+    else fibonacci(n - 1) + fibonacci(n - 2)
+}
 
 /********************  TESTS ******************************/
 fun main() {
