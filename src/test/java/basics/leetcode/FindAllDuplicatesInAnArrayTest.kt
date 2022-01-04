@@ -1,5 +1,6 @@
 package basics.leetcode
 
+import basics.leetcode.findAllDuplicatesInAnArray.FindAllDuplicatesInAnArray
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
