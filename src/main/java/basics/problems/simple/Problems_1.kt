@@ -1,4 +1,4 @@
-package basics.leetcode
+package basics.problems.simple
 
 class ShortestCompletionWord {
     // Source; https://leetcode.com/problems/shortest-completing-word/
