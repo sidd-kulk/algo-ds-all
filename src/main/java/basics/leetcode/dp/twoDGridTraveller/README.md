@@ -6,3 +6,5 @@ In how many ways can you travel to the goal on a grid with dimensions `m * n`?
 
 Write a function `gridTraveler(m, n)` that calculates this.
 
+Tests are here: 
+https://github.com/sidcool1234/algo-ds-all/blob/main/src/test/java/basics/leetcode/dp/twoDGridTraveller/TwoDGridTravellerTest.kt
