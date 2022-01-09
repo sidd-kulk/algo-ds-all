@@ -54,5 +54,9 @@ internal class TwoDGridTravellerTest {
         val bruteForceTime = measureTimeMillis { TwoDGridTraveller.noOfWaysToTraverseBruteForce(12, 12) }
         val dpSolutionTime = measureTimeMillis { TwoDGridTraveller.noOfWaysToTraverseWithDynamicProgramming(12, 12) }
         assertTrue(bruteForceTime > dpSolutionTime)
+
+        val bruteForceTimeIter2 = measureTimeMillis { TwoDGridTraveller.noOfWaysToTraverseBruteForce(15, 14) }
+        val dpSolutionTimeIter2 = measureTimeMillis { TwoDGridTraveller.noOfWaysToTraverseWithDynamicProgramming(15, 14) }
+        assertTrue(bruteForceTimeIter2 > dpSolutionTimeIter2)
     }
 }
