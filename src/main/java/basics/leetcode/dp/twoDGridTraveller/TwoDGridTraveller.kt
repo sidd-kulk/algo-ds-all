@@ -15,4 +15,16 @@ object TwoDGridTraveller {
 
         return noOfWaysToTraverseBruteForce(x -1 , y) + noOfWaysToTraverseBruteForce(x, y - 1)
     }
+
+    fun noOfWaysToTraverseWithDynamicProgramming(x: Int, y: Int, hm: MutableMap<Pair<Int, Int>, Int> = mutableMapOf()): Int{
+        if(x < 0 || y < 0) throw IllegalArgumentException("Arguments cannot be negative")
+
+        val coordinates = Pair(x, y)
+        if(hm.containsKey(coordinates)) return hm[coordinates]!!
+        if(x == 0 || y == 0) return 0
+        if(x == 1 && y == 1) return 1
+
+        hm[coordinates]  = noOfWaysToTraverseWithDynamicProgramming(x -1 , y, hm) + noOfWaysToTraverseWithDynamicProgramming(x, y - 1, hm)
+        return hm[coordinates]!!
+    }
 }
