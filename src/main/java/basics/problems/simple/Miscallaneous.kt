@@ -81,25 +81,11 @@ fun fibonacci(n: Int): Int {
 
 fun fibonacciDynamicProgramming(n: Int, hm: MutableMap<Int, Int> = mutableMapOf()): Int {
     return if(n <= 2) 1
+    else if (hm.containsKey(n)) return hm[n]!!
     else {
-        var a: Int = 0
-        var b: Int = 0
-        a = if(hm.containsKey(n - 1)){
-            hm[n - 1]!!
-        } else {
-            val ax = fibonacciDynamicProgramming(n - 1, hm)
-            hm[n - 1] = ax
-            ax
-        }
 
-        b = if(hm.containsKey(n - 2)){
-            hm[n - 2]!!
-        } else {
-            val ay = fibonacciDynamicProgramming(n - 2, hm)
-            hm[n - 2] = ay
-            ay
-        }
-        a + b
+        hm[n] = fibonacciDynamicProgramming(n - 1, hm) + fibonacciDynamicProgramming(n - 2, hm)
+        return hm[n]!!
     }
 }
 
@@ -112,9 +98,9 @@ fun main() {
 //    println(combinations(arrayOf(5, 2, 6, 3, 1), 2))
 //    println(nPairAddingUpTo(arrayOf(5, 6, 1, 2, 8, 3, 2, 34, 66, 23, 55, 64, 31, 77), 3, 77))
 //    println(Arrays.toString(pairAddingupOptimized(arrayOf(5, 2, 6, 3, 1), 9)))
-    val n = 45
-    println(measureTimeMillis { fibonacci(n) })
-    println(measureTimeMillis { fibonacciDynamicProgramming(n) })
+    val n = 14
+    println(measureTimeMillis { println(fibonacci(n)) })
+    println(measureTimeMillis { println(fibonacciDynamicProgramming(n)) })
 }
 
 class Tests {
