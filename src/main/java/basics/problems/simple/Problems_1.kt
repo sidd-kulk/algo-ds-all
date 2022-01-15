@@ -1,5 +1,8 @@
 package basics.problems.simple
 
+import java.util.*
+import kotlin.collections.HashSet
+
 class ShortestCompletionWord {
     // Source; https://leetcode.com/problems/shortest-completing-word/
     fun shortestCompletingWord(licensePlate: String, words: Array<String>): String {
@@ -7,7 +10,7 @@ class ShortestCompletionWord {
         val sortedBy = words.sortedBy { it.length }
         sortedBy.forEach { word ->
             val transformedWord = transform(word)
-            if(charArrayContains(transformedWord, transformedLicensePlate)){
+            if (charArrayContains(transformedWord, transformedLicensePlate)) {
                 return word
             }
         }
@@ -21,15 +24,15 @@ class ShortestCompletionWord {
     fun charArrayContains(main: CharArray, contains: CharArray): Boolean {
         var counter = 0
         var temp = main.clone()
-        for(c in contains) {
-            if(temp.contains(c)){
+        for (c in contains) {
+            if (temp.contains(c)) {
                 temp = removeFromCharArray(temp, c)
-               counter ++
+                counter++
             } else {
                 break
             }
         }
-        if(counter == contains.size) {
+        if (counter == contains.size) {
             return true
         }
         return false
@@ -40,8 +43,15 @@ class ShortestCompletionWord {
     }
 }
 
+
+fun countOfDistinctElements(array: IntArray): Int {
+    if (array.size <= 1) return array.size
+    return array.toSet().size
+}
+
 fun main() {
 //    println(ShortestCompletionWord().transform("Ah s 34 an"))
 //    println(ShortestCompletionWord().charArrayContains("steps".toCharArray(), "spst".toCharArray()))
-    println(ShortestCompletionWord().shortestCompletingWord("1s3 PSt", arrayOf("step","steps","stripe","stepple")))
+//    println(ShortestCompletionWord().shortestCompletingWord("1s3 PSt", arrayOf("step","steps","stripe","stepple")))
+    println(countOfDistinctElements(intArrayOf(1, 2, 3, 4, 5, 5, 4, 2)))
 }
