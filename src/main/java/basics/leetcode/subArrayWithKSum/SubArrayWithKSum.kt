@@ -6,7 +6,7 @@ package basics.leetcode.subArrayWithKSum
  * Then solve the other more complex one
  */
 object SubArrayWithKSum {
-    fun solveOptimal(arr: IntArray): Boolean {
+    fun solveOptimalForZeroSumSelfIncluded(arr: IntArray): Boolean {
         // 10,1,-4,-3,5,1
 
         TODO()
