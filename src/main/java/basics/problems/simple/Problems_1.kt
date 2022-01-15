@@ -1,6 +1,7 @@
 package basics.problems.simple
 
 import java.util.*
+import java.util.stream.Collectors
 import kotlin.collections.HashSet
 
 class ShortestCompletionWord {
@@ -49,9 +50,18 @@ fun countOfDistinctElements(array: IntArray): Int {
     return array.toSet().size
 }
 
+fun frequencyOfElements(array: IntArray): Map<Int, Int> {
+    val map = mutableMapOf<Int, Int>()
+    for (num in array) {
+        map[num] = map.getOrDefault(num, 0) + 1
+    }
+    return map
+}
+
 fun main() {
 //    println(ShortestCompletionWord().transform("Ah s 34 an"))
 //    println(ShortestCompletionWord().charArrayContains("steps".toCharArray(), "spst".toCharArray()))
 //    println(ShortestCompletionWord().shortestCompletingWord("1s3 PSt", arrayOf("step","steps","stripe","stepple")))
-    println(countOfDistinctElements(intArrayOf(1, 2, 3, 4, 5, 5, 4, 2)))
+//    println(countOfDistinctElements(intArrayOf(1, 2, 3, 4, 5, 5, 4, 2)))
+    println(frequencyOfElements(intArrayOf(1, 2, 3, 4, 5, 5, 4, 2, 2)))
 }
