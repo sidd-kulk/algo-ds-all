@@ -13,7 +13,10 @@ object SubArrayWithKSum {
         for(i in prefixSumArray.indices){
             if(set.contains(prefixSumArray[i]) || prefixSumArray[i] == 0){
                 return true
-            } else {
+            } else if (k != 0 && prefixSumArray[i] % k == 0) {
+                return true
+            }
+            else {
                 set.add(prefixSumArray[i])
             }
         }
@@ -21,13 +24,21 @@ object SubArrayWithKSum {
     }
 
     fun solveOptimalForKSumSelfExcluded(arr: IntArray, k: Int = 0): Boolean {
+        println("${arr.asList()}, $k")
         val prefixSumArray = prefixSum(arr)
         val set = mutableSetOf<Int>()
+        println(prefixSumArray.asList())
         for(i in prefixSumArray.indices){
-            set.add(prefixSumArray[i])
-            if(set.contains(k) || set.contains(prefixSumArray[i] - k) ){
+            if(k == prefixSumArray[i] || set.contains(prefixSumArray[i] - k)   ){ // TODO - Not Working
                 return true
+            } else {
+                set.add(prefixSumArray[i])
             }
+
+//            set.add(prefixSumArray[i])
+//            if(set.contains(k) || set.contains(prefixSumArray[i] - k) || prefixSumArray[i] % k == 0){
+//                return true
+//            }
         }
         return false
     }
