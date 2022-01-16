@@ -6,10 +6,44 @@ package basics.leetcode.subArrayWithKSum
  * Then solve the other more complex one
  */
 object SubArrayWithKSum {
-    fun solveOptimalForZeroSumSelfIncluded(arr: IntArray): Boolean {
-        // 10,1,-4,-3,5,1
+    fun solveOptimalForZeroSumSelfIncluded(arr: IntArray, k: Int = 0): Boolean {
+        // 1, 4, 13, -3, -10, 5
+        val prefixSumArray = prefixSum(arr) // 1,5,18,15,5,10
+        val set = mutableSetOf<Int>()
+        for(i in prefixSumArray.indices){
+            if(set.contains(prefixSumArray[i]) || prefixSumArray[i] == 0){
+                return true
+            } else {
+                set.add(prefixSumArray[i])
+            }
+        }
+        return false
+    }
 
-        TODO()
+    fun solveOptimalForKSumSelfExcluded(arr: IntArray, k: Int = 0): Boolean {
+        val prefixSumArray = prefixSum(arr)
+        val set = mutableSetOf<Int>()
+        for(i in prefixSumArray.indices){
+            set.add(prefixSumArray[i])
+            if(set.contains(k) || set.contains(prefixSumArray[i] - k) ){
+                return true
+            }
+        }
+        return false
+    }
+
+    fun prefixSum(arr: IntArray): IntArray {
+        val prefixSumArray = IntArray(arr.size)
+        prefixSumArray[0] = arr[0]
+        for(i in 1 until arr.size){
+            prefixSumArray[i] = arr[i] + prefixSumArray[i-1]
+        }
+        return prefixSumArray
+    }
+
+    @JvmStatic
+    fun main(args: Array<String>) {
+        println(prefixSum(intArrayOf(1, 4, 13, -3, -10, 5)).asList())
     }
 
 
@@ -24,7 +58,7 @@ object SubArrayWithKSum {
         return false
     }
 
-    fun subArrayWithKSumSelfExcluded(arr: IntArray, k: Int): Boolean{
+    fun subArrayWithKSumBruteForceSelfExcluded(arr: IntArray, k: Int): Boolean{
         for(i in arr.indices){
             var sum = arr[i]
             for(j in i+1 until arr.size){

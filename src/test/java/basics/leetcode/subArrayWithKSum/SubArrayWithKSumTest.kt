@@ -15,6 +15,7 @@ internal class SubArrayWithKSumTest {
             intArrayOf(1, 1, 0)
         ).forEach {
             assertTrue(SubArrayWithKSum.solveBruteForceSelfIncluded(it))
+            assertTrue(SubArrayWithKSum.solveOptimalForZeroSumSelfIncluded(it))
         }
 
         arrayOf<IntArray>(
@@ -23,6 +24,7 @@ internal class SubArrayWithKSumTest {
             intArrayOf(1, 1, 1, 1, 1)
         ).forEach {
             assertFalse(SubArrayWithKSum.solveBruteForceSelfIncluded(it))
+            assertFalse(SubArrayWithKSum.solveOptimalForZeroSumSelfIncluded(it))
         }
     }
 
@@ -34,7 +36,9 @@ internal class SubArrayWithKSumTest {
             Pair(intArrayOf(1, 4, 13, -3, -10, 5), 18),
             Pair(intArrayOf(1, 1, 0), 2),
         ).forEach {
-            assertTrue(SubArrayWithKSum.subArrayWithKSumSelfExcluded(it.first, it.second))
+//            assertTrue(SubArrayWithKSum.subArrayWithKSumBruteForceSelfExcluded(it.first, it.second))
+//            assertTrue(SubArrayWithKSum.solveOptimalForKSumSelfExcluded(it.first, it.second))
+            assertTrue(SubArrayWithKSum.solveOptimalForKSumSelfExcluded(it.first, it.second))
         }
 
         arrayOf<Pair<IntArray, Int>>(
@@ -42,7 +46,9 @@ internal class SubArrayWithKSumTest {
             Pair(intArrayOf(1), 9),
             Pair(intArrayOf(1, 1, 1, 1, 1), 10),
         ).forEach {
-            assertFalse(SubArrayWithKSum.subArrayWithKSumSelfExcluded(it.first, it.second))
+//            assertFalse(SubArrayWithKSum.subArrayWithKSumBruteForceSelfExcluded(it.first, it.second))
+//            assertFalse(SubArrayWithKSum.solveOptimalForZeroSumSelfIncluded(it.first, it.second))
+            assertFalse(SubArrayWithKSum.solveOptimalForKSumSelfExcluded(it.first, it.second))
         }
     }
 }

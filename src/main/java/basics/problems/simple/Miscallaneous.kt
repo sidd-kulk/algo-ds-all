@@ -50,8 +50,6 @@ fun pairAddingupOptimized(array: Array<Int>, sum: Int): Array<Int> { //5, 2, 6, 
             return arrayOf(map[array[i]]!!, i )
         }
         map[ntf] = i
-        println(map)
-        continue
     }
 
     return emptyArray();
@@ -97,10 +95,10 @@ fun main() {
 //    println("Tests Passed!")
 //    println(combinations(arrayOf(5, 2, 6, 3, 1), 2))
 //    println(nPairAddingUpTo(arrayOf(5, 6, 1, 2, 8, 3, 2, 34, 66, 23, 55, 64, 31, 77), 3, 77))
-//    println(Arrays.toString(pairAddingupOptimized(arrayOf(5, 2, 6, 3, 1), 9)))
-    val n = 14
-    println(measureTimeMillis { println(fibonacci(n)) })
-    println(measureTimeMillis { println(fibonacciDynamicProgramming(n)) })
+    println(Arrays.toString(pairAddingupOptimized(arrayOf(5, 2, 6, 3, 1), 9)))
+//    val n = 14
+//    println(measureTimeMillis { println(fibonacci(n)) })
+//    println(measureTimeMillis { println(fibonacciDynamicProgramming(n)) })
 }
 
 class Tests {
