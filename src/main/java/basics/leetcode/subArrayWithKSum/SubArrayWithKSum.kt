@@ -1,5 +1,7 @@
 package basics.leetcode.subArrayWithKSum
 
+import kotlin.math.max
+
 /**
  * A Sub problem of it's more complex cousin.
  * In this problem we just find subarray with zero sum.
@@ -10,13 +12,12 @@ object SubArrayWithKSum {
         // 1, 4, 13, -3, -10, 5
         val prefixSumArray = prefixSum(arr) // 1,5,18,15,5,10
         val set = mutableSetOf<Int>()
-        for(i in prefixSumArray.indices){
-            if(set.contains(prefixSumArray[i]) || prefixSumArray[i] == 0){
+        for (i in prefixSumArray.indices) {
+            if (set.contains(prefixSumArray[i]) || prefixSumArray[i] == 0) {
                 return true
             } else if (k != 0 && prefixSumArray[i] % k == 0) {
                 return true
-            }
-            else {
+            } else {
                 set.add(prefixSumArray[i])
             }
         }
@@ -28,8 +29,8 @@ object SubArrayWithKSum {
         val prefixSumArray = prefixSum(arr)
         val set = mutableSetOf<Int>()
         println(prefixSumArray.asList())
-        for(i in prefixSumArray.indices){
-            if(k == prefixSumArray[i] || set.contains(prefixSumArray[i] - k)   ){ // TODO - Not Working
+        for (i in prefixSumArray.indices) {
+            if (k == prefixSumArray[i] || set.contains(prefixSumArray[i] - k)) { // TODO - Not Working
                 return true
             } else {
                 set.add(prefixSumArray[i])
@@ -46,8 +47,8 @@ object SubArrayWithKSum {
     fun prefixSum(arr: IntArray): IntArray {
         val prefixSumArray = IntArray(arr.size)
         prefixSumArray[0] = arr[0]
-        for(i in 1 until arr.size){
-            prefixSumArray[i] = arr[i] + prefixSumArray[i-1]
+        for (i in 1 until arr.size) {
+            prefixSumArray[i] = arr[i] + prefixSumArray[i - 1]
         }
         return prefixSumArray
     }
@@ -59,24 +60,49 @@ object SubArrayWithKSum {
 
 
     fun solveBruteForceSelfIncluded(arr: IntArray, k: Int = 0): Boolean {
-        for(i in arr.indices){
+        for (i in arr.indices) {
             var sum = 0
-            for(j in i until arr.size){
+            for (j in i until arr.size) {
                 sum += arr[j]
-                if(sum == 0) return true
+                if (sum == 0) return true
             }
         }
         return false
     }
 
-    fun subArrayWithKSumBruteForceSelfExcluded(arr: IntArray, k: Int): Boolean{
-        for(i in arr.indices){
+    fun subArrayWithKSumBruteForceSelfExcluded(arr: IntArray, k: Int): Boolean {
+        for (i in arr.indices) {
             var sum = arr[i]
-            for(j in i+1 until arr.size){
+            for (j in i + 1 until arr.size) {
                 sum += arr[j]
-                if(sum == k || sum % k == 0) return true
+                if (sum == k || sum % k == 0) return true
             }
         }
         return false
+    }
+}
+
+object LongestSubArrayWithKSum {
+    // 5, -10, 7, -10, 8
+    fun find(arr: IntArray, k: Int): Int {
+        val map = mutableMapOf<Int, Int>()
+        var prefixSum = 0
+        var longestSubArrayLengthWithKSum = 0
+        for (i in arr.indices) {
+            prefixSum += arr[i]
+            if(prefixSum == k) {
+                longestSubArrayLengthWithKSum = max(longestSubArrayLengthWithKSum, i + 1)
+            }
+            if (map.containsKey(prefixSum - k)) {
+                val j = map[prefixSum - k]
+                longestSubArrayLengthWithKSum = max(longestSubArrayLengthWithKSum, i - j!!)
+            }
+            if (!map.containsKey(prefixSum)) {
+                map[prefixSum] = i
+            }
+            println(map)
+            println(longestSubArrayLengthWithKSum)
+        }
+        return longestSubArrayLengthWithKSum
     }
 }
