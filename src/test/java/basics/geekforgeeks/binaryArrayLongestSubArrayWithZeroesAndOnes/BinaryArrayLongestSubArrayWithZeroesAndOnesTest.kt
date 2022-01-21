@@ -16,4 +16,11 @@ internal class BinaryArrayLongestSubArrayWithZeroesAndOnesTest {
         assertEquals(4, BinaryArrayLongestSubArrayWithZeroesAndOnes.countBruteForce(intArrayOf(0,0,1,1,1,1,1,0)))
         assertEquals(6, BinaryArrayLongestSubArrayWithZeroesAndOnes.countBruteForce(intArrayOf(0,0,1,0,1,1)))
     }
+
+    fun countBruteOptimal() {
+        assertEquals(6, BinaryArrayLongestSubArrayWithZeroesAndOnes.countOptimal(intArrayOf(1,0,1,1,1,0,0)))
+        assertEquals(0, BinaryArrayLongestSubArrayWithZeroesAndOnes.countOptimal(intArrayOf(1,1,1,1)))
+        assertEquals(4, BinaryArrayLongestSubArrayWithZeroesAndOnes.countOptimal(intArrayOf(0,0,1,1,1,1,1,0)))
+        assertEquals(6, BinaryArrayLongestSubArrayWithZeroesAndOnes.countOptimal(intArrayOf(0,0,1,0,1,1)))
+    }
 }
