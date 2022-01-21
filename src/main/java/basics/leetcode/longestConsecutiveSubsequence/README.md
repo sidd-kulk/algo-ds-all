@@ -19,8 +19,6 @@ Example 2:
     Input: nums = [0,3,7,2,5,8,4,6,0,1]
     Output: 9
 
-
-
 Constraints:
 
     0 <= nums.length <= 105
