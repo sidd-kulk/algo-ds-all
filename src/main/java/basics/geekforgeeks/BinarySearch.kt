@@ -1,7 +1,7 @@
 package basics.geekforgeeks
 
 object BinarySearch {
-    fun search(sortedArray: IntArray, s: Int): Int {
+    fun iterative(sortedArray: IntArray, s: Int): Int {
         var low = 0
         var high = sortedArray.size - 1
 
@@ -16,5 +16,21 @@ object BinarySearch {
             }
         }
         return -1
+    }
+
+    fun recursive(sortedArray: IntArray, s: Int): Int {
+
+        fun inner(low: Int, high: Int): Int {
+            if (low > high) return -1
+            val searchAt = (low + high) / 2
+            return if (sortedArray[searchAt] > s) {
+                inner(low, searchAt - 1)
+            } else if (sortedArray[searchAt] < s) {
+                inner(searchAt + 1, high)
+            } else { // equal
+                searchAt
+            }
+        }
+        return inner(0, sortedArray.size - 1)
     }
 }
