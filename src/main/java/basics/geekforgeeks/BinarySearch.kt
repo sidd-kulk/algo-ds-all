@@ -34,3 +34,24 @@ object BinarySearch {
         return inner(0, sortedArray.size - 1)
     }
 }
+
+object FirstOccurrence {
+    fun find(sortedArray: IntArray, s: Int): Int {
+        var low = 0
+        var high = sortedArray.size - 1
+
+        while (low <= high) {
+            val searchAt = (low + high) / 2
+            if (sortedArray[searchAt] > s) {
+                high = searchAt - 1
+            } else if (sortedArray[searchAt] < s) {
+                low = searchAt + 1
+            } else if (searchAt == 0 || sortedArray[searchAt] != sortedArray[searchAt - 1]) { // equal
+                return searchAt
+            } else {
+                high = searchAt - 1
+            }
+        }
+        return -1
+    }
+}
