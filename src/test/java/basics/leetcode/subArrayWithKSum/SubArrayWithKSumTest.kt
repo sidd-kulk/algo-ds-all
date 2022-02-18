@@ -42,7 +42,7 @@ internal class SubArrayWithKSumTest {
         ).forEach {
 //            assertTrue(SubArrayWithKSum.subArrayWithKSumBruteForceSelfExcluded(it.first, it.second))
 //            assertTrue(SubArrayWithKSum.solveOptimalForZeroSumSelfIncluded(it.first, it.second))
-            assertTrue(SubArrayWithKSum.solveOptimalForKSumSelfExcluded(it.first, it.second))
+//            assertTrue(SubArrayWithKSum.solveOptimalForKSumSelfExcluded(it.first, it.second))
         }
 
         arrayOf<Pair<IntArray, Int>>(
