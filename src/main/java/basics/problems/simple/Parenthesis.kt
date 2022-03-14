@@ -27,6 +27,32 @@ object ParenthesisValidation {
     }
 }
 
+object BalancedParenthesis {
+    fun validate(str: String): Boolean {
+        val stack = Stack<Char>()
+
+        for (c in str) {
+            if ("({[".contains(c)) {
+                stack.push(c)
+            } else if (")}]".contains(c)) {
+                if (stack.isEmpty()) return false
+                val popped = stack.pop()
+                if (!matchComplimentaryParenthesis(popped, c)) {
+                    return false
+                }
+            } else {
+                return false
+            }
+        }
+
+        return stack.isEmpty()
+    }
+
+    private fun matchComplimentaryParenthesis(leftBracket: Char, rightBracket: Char): Boolean {
+        return (leftBracket == '(' && rightBracket == ')') || (leftBracket == '{' && rightBracket == '}') || (leftBracket == '[' && rightBracket == ']')
+    }
+}
+
 // https://leetcode.com/problems/minimum-remove-to-make-valid-parentheses/
 object MinimumBracketsRemoval {
     fun minimumBracketRemoval(input: String): String {
@@ -56,7 +82,7 @@ object MinimumBracketsRemoval {
         }
 
         val charArray = output.toString().toCharArray()
-        for(index in stack) {
+        for (index in stack) {
             charArray[index] = ' '
         }
         val filteredArray = charArray.filter { it != ' ' }
@@ -86,7 +112,7 @@ object MinimumBracketsRemoval {
             }
         }
 
-        while(stack.size > 0) {
+        while (stack.size > 0) {
             arr[stack.pop()] = ' '
         }
         val filteredArray = arr.filter { it != ' ' }

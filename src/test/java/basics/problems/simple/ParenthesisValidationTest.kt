@@ -10,6 +10,10 @@ internal class ParenthesisValidationTest {
         Assertions.assertTrue(ParenthesisValidation.validate("[{}]"))
         Assertions.assertTrue(ParenthesisValidation.validate("{(){}}"))
         Assertions.assertTrue(ParenthesisValidation.validate("[({}()){}[()]]"))
+
+        Assertions.assertTrue(BalancedParenthesis.validate("[{}]"))
+        Assertions.assertTrue(BalancedParenthesis.validate("{(){}}"))
+        Assertions.assertTrue(BalancedParenthesis.validate("[({}()){}[()]]"))
     }
 
     @Test
@@ -18,5 +22,10 @@ internal class ParenthesisValidationTest {
         Assertions.assertFalse(ParenthesisValidation.validate("(}]"))
         Assertions.assertFalse(ParenthesisValidation.validate("}}}]](}]"))
         Assertions.assertFalse(ParenthesisValidation.validate("["))
+
+        Assertions.assertFalse(BalancedParenthesis.validate("[{(}]"))
+        Assertions.assertFalse(BalancedParenthesis.validate("(}]"))
+        Assertions.assertFalse(BalancedParenthesis.validate("}}}]](}]"))
+        Assertions.assertFalse(BalancedParenthesis.validate("["))
     }
 }
