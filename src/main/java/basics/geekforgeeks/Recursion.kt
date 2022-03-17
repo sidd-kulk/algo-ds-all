@@ -10,23 +10,34 @@ fun binary(n: Int) {
 
 
 tailrec fun printNumsTailRecursive(n: Int, acc: Int = 1) {
-    if(n == 0){
+    if (n == 0) {
         return
     }
     print("$acc,")
     printNumsTailRecursive(n - 1, acc + 1)
 }
 
+fun sumOfFirstNNaturalNumbers(n: Int): Int {
+    if (n == 0) return 0
+    return n + sumOfFirstNNaturalNumbers(n - 1)
+}
+
+fun sumOfFirstNNaturalNumbersTailRecursive(n: Int, acc: Int = 0): Int {
+    if (n == 0) return acc
+    return sumOfFirstNNaturalNumbersTailRecursive(n - 1, acc + n)
+}
+
 fun printNums(n: Int, order: String = "regular") {
-    if(n == 0){
+    if (n == 0) {
         return
     }
-    if(order == "reversed") print("$n,")
+    if (order == "reversed") print("$n,")
     printNums(n - 1, order)
-    if(order == "regular") print("$n,")
+    if (order == "regular") print("$n,")
 }
 
 fun main() {
 //    printNums(13)
-    printNumsTailRecursive(13)
+//    printNumsTailRecursive(13)
+    println(sumOfFirstNNaturalNumbersTailRecursive(10))
 }
