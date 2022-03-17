@@ -8,6 +8,15 @@ fun binary(n: Int) {
     print(n % 2)
 }
 
+
+tailrec fun printNumsTailRecursive(n: Int, acc: Int = 1) {
+    if(n == 0){
+        return
+    }
+    print("$acc,")
+    printNumsTailRecursive(n - 1, acc + 1)
+}
+
 fun printNums(n: Int, order: String = "regular") {
     if(n == 0){
         return
@@ -19,5 +28,5 @@ fun printNums(n: Int, order: String = "regular") {
 
 fun main() {
 //    printNums(13)
-    printNums(13, "reversed")
+    printNumsTailRecursive(13)
 }
