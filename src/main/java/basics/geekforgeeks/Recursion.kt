@@ -36,8 +36,15 @@ fun printNums(n: Int, order: String = "regular") {
     if (order == "regular") print("$n,")
 }
 
+fun sumOfDigits(i: Int): Int {
+    if (i % 10 == i) return i
+
+    return i % 10 + sumOfDigits(i / 10)
+}
+
 fun main() {
 //    printNums(13)
 //    printNumsTailRecursive(13)
-    println(sumOfFirstNNaturalNumbersTailRecursive(10))
+//    println(sumOfFirstNNaturalNumbersTailRecursive(10))
+    println(sumOfDigits(123))
 }
