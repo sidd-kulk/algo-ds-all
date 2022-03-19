@@ -206,6 +206,7 @@ object LongestSubsString {
         }
         return maxCount
     }
+
     fun longestSubStringWithoutRepeatingCharactersSlidingWindow(input: String): Int {
         // a b c a b c b b
         if (input.length <= 1) return input.length
@@ -231,11 +232,28 @@ object LongestSubsString {
 
 object ReverseString {
     fun doItRecursive(input: String): String {
-        if(input.length == 1) return input
+        if (input.length == 1) return input
 
         val first = input.dropLast(input.length - 1)
         val rest = input.drop(1)
 
         return doItRecursive(rest) + first
     }
+}
+
+object PalindromeByRecursion {
+    fun isPalindrome(s: String): Boolean {
+        fun isPalindrome(s: String, start: Int, end: Int): Boolean {
+            if (start >= end) return true
+
+            return s[start] == s[end] && isPalindrome(s, start + 1, end - 1)
+        }
+
+        return isPalindrome(s, 0, s.length - 1)
+
+    }
+}
+
+fun main() {
+    println(PalindromeByRecursion.isPalindrome("abba"))
 }
