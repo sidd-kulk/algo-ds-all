@@ -46,5 +46,5 @@ fun main() {
 //    printNums(13)
 //    printNumsTailRecursive(13)
 //    println(sumOfFirstNNaturalNumbersTailRecursive(10))
-    println(sumOfDigits(123))
+    println(sumOfDigits(873 ))
 }
