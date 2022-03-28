@@ -1,32 +1,38 @@
 package basics.leetcode
 
+import java.util.*
+import kotlin.system.measureTimeMillis
+
 object Permutations {
     /**
      * Vanilla implementation - No diverging cases
      * - No repeated characters
      * - No spaces in between or at ends
      */
-    fun vanilla(s: String) {
+    fun vanilla(s: String): Array<String> {
         fun swap(chars: CharArray, i: Int, j: Int) {
             val temp = chars[i];
             chars[i] = chars[j];
             chars[j] = temp;
         }
 
-        fun inner(so: CharArray, i: Int) {
-            if (i == so.size - 1) println(so.joinToString(""))
-            for (c in i until so.size) {
-                swap(so, c, i)
-                inner(so, i + 1)
-                swap(so, c, i)
+        fun inner(so: CharArray, i: Int, list: MutableList<String>): Array<String> {
+            if (i == so.size - 1) {
+                list.add(so.joinToString(""))
             }
+            for (j in i until so.size) {
+                swap(so, j, i)
+                inner(so, i + 1, list)
+                swap(so, j, i)
+            }
+            return list.toTypedArray()
         }
 
-        inner(s.toCharArray(), 0)
+        return inner(s.toCharArray(), 0, mutableListOf())
 
     }
 }
 
 fun main() {
-    Permutations.vanilla("ABC")
+    println(Permutations.vanilla("AB").contentToString())
 }
