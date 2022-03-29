@@ -11,6 +11,8 @@ object Permutations {
      */
     fun vanilla(s: String): Array<String> {
         fun swap(chars: CharArray, i: Int, j: Int) {
+            if(i == j) return
+
             val temp = chars[i];
             chars[i] = chars[j];
             chars[j] = temp;
@@ -19,6 +21,7 @@ object Permutations {
         fun inner(so: CharArray, i: Int, list: MutableList<String>): Array<String> {
             if (i == so.size - 1) {
                 list.add(so.joinToString(""))
+                return list.toTypedArray()
             }
             for (j in i until so.size) {
                 swap(so, j, i)
@@ -34,5 +37,5 @@ object Permutations {
 }
 
 fun main() {
-    println(Permutations.vanilla("AB").contentToString())
+    println(Permutations.vanilla("ABC").contentToString())
 }
