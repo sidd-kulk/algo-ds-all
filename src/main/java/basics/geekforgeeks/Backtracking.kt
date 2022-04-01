@@ -19,22 +19,31 @@ object PermutationsWithStringSearch {
     }
 
     // With Backtracking
-    fun findNotContainingNoBacktracking(str: String, search: String): List<String> {
+    fun findNotContainingWithBacktracking(str: String, search: String): List<String> {
         fun find(s: String): List<String> {
             fun swap(chars: CharArray, i: Int, j: Int) {
+                if (i == j) return
                 val temp = chars[i];
                 chars[i] = chars[j];
                 chars[j] = temp;
             }
 
+            fun isNeeded(so: CharArray): Boolean {
+                TODO()
+                return true
+            }
+
             fun inner(so: CharArray, i: Int, list: MutableList<String>): List<String> {
                 if (i == so.size - 1) {
                     list.add(so.joinToString(""))
+                    return list
                 }
                 for (j in i until so.size) {
-                    swap(so, j, i)
-                    inner(so, i + 1, list)
-                    swap(so, j, i)
+                    if (isNeeded(so)) {
+                        swap(so, j, i)
+                        inner(so, i + 1, list)
+                        swap(so, j, i)
+                    }
                 }
                 return list
             }
@@ -47,5 +56,6 @@ object PermutationsWithStringSearch {
 }
 
 fun main() {
-    println(measureTimeMillis { PermutationsWithStringSearch.findNotContaining("ABCDEFGH", "AB") })
+//    println(measureTimeMillis { PermutationsWithStringSearch.findNotContaining("ABCDEFGH", "AB") })
+    println(PermutationsWithStringSearch.findNotContainingWithBacktracking("ABC", "AB"))
 }
