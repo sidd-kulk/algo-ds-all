@@ -1,5 +1,7 @@
 package basics.geekforgeeks
 
+import java.util.*
+
 object RatInAMaze {
     fun visitAllGridsOnlyOnce(
         m: Int,
@@ -45,5 +47,4 @@ object RatInAMaze {
 }
 
 fun main() {
-    RatInAMaze.visitAllGridsOnlyOnce(3, 3)
 }
