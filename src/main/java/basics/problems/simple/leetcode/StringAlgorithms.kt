@@ -214,7 +214,6 @@ object LongestSubsString {
         var leftPointer = 0
         var longest = 0
         val map = mutableMapOf<Char, Int>()
-        var currentLongest = 0
 
         for (rightPointer in input.indices) {
             val lastChar = input[rightPointer]
@@ -255,5 +254,5 @@ object PalindromeByRecursion {
 }
 
 fun main() {
-    println(PalindromeByRecursion.isPalindrome("abba"))
+    println(LongestSubsString.longestSubStringWithoutRepeatingCharactersSlidingWindow("abcb"))
 }
