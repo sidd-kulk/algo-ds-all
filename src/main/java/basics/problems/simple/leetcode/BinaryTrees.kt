@@ -1,5 +1,7 @@
 package basics.problems.simple.leetcode
 
+import java.lang.StringBuilder
+
 object BinaryTrees {
     val list = mutableListOf<String>()
     fun sumRootToLeaf(node: INode<Int>?, acc: String): String {
@@ -193,10 +195,49 @@ object BTreePrinter {
     }
 }
 
-class BinaryTreeNode(var left: BinaryTreeNode?, val data: Int, var right: BinaryTreeNode?)
+class BinaryTreeNode(var left: BinaryTreeNode?, private val data: Int, var right: BinaryTreeNode?) {
+    override fun toString(): String {
+        return this.data.toString()
+    }
+
+
+    fun descendants(node: BinaryTreeNode? = this, lineCounter: Int = 0) {
+        if (node != null) {
+            if (node.left == null && node.right == null) {
+                return
+            }
+        } else {
+            return
+        }
+        val sb = StringBuilder("-")
+        for (i in 0 until lineCounter) {
+            sb.append("-")
+        }
+        val str = sb.toString()
+
+        if (node.left != null) {
+            println("$str ${node.left?.data} left ${leafText()}")
+            descendants(node.left, lineCounter + 1)
+        }
+
+        if (node.right != null) {
+            println("$str ${node.right?.data} right  ${leafText()}")
+            descendants(node.right, lineCounter + 1)
+        }
+
+
+    }
+    private fun leafText(isLeaf: Boolean = false): String {
+        return if (isLeaf) "::leaf" else ""
+    }
+}
 
 fun main() {
     val root = BinaryTreeNode(BinaryTreeNode(null, 2, null), 1, BinaryTreeNode(null, 3, null))
-    root.left!!.left = BinaryTreeNode(null, 4, null)
+    root.left!!.left = BinaryTreeNode(BinaryTreeNode(null, 5, null), 4, null)
+    root.left!!.right = BinaryTreeNode(null, 6, BinaryTreeNode(null, 11, null))
     root.right!!.right = BinaryTreeNode(null, 7, null)
+    root.right!!.left = BinaryTreeNode(null, 9, null)
+
+    root.descendants(root)
 }
