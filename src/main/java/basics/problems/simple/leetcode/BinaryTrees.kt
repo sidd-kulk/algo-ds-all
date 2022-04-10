@@ -4,18 +4,18 @@ object BinaryTrees {
     val list = mutableListOf<String>()
     fun sumRootToLeaf(node: INode<Int>?, acc: String): String {
         println(acc)
-        if(node == null) {
+        if (node == null) {
             println("node is null")
             return acc
         }
         var acc1 = acc + node.data
-        if(node.left != null) {
+        if (node.left != null) {
             println("left: $acc1, ${node.data}")
             acc1 += sumRootToLeaf(node.left, acc1)
         }
 
         var acc2 = acc + node.data
-        if(node.right != null) {
+        if (node.right != null) {
             println("right: $acc2, ${node.data}")
             acc2 += sumRootToLeaf(node.right, acc2)
         }
@@ -26,7 +26,7 @@ object BinaryTrees {
 
     fun sumRootToLeaf1(node: INode<Int>?, acc: String): String {
 //        println(acc)
-        if(node == null) {
+        if (node == null) {
             println("node is null")
             return acc
         }
@@ -56,12 +56,6 @@ object BinaryTrees {
 //        println("acc1 = $acc1, acc2 = $acc2")
 //        return acc1
     }
-}
-
-fun main() {
-    val iNode = createINodes()
-    BTreePrinter.printNode(iNode)
-    println(BinaryTrees.sumRootToLeaf1(iNode, ""))
 }
 
 object BTreePrinterTest {
@@ -197,4 +191,12 @@ object BTreePrinter {
         }
         return true
     }
+}
+
+class BinaryTreeNode(var left: BinaryTreeNode?, val data: Int, var right: BinaryTreeNode?)
+
+fun main() {
+    val root = BinaryTreeNode(BinaryTreeNode(null, 2, null), 1, BinaryTreeNode(null, 3, null))
+    root.left!!.left = BinaryTreeNode(null, 4, null)
+    root.right!!.right = BinaryTreeNode(null, 7, null)
 }
