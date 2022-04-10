@@ -200,6 +200,30 @@ class BinaryTreeNode(var left: BinaryTreeNode?, private val data: Int, var right
         return this.data.toString()
     }
 
+    fun inorder(node: BinaryTreeNode? = this, nodeDescription: String = "root") {
+        if (node != null) {
+            inorder(node.left, "left")
+            println("$node -- $nodeDescription")
+            inorder(node.right, "right")
+        }
+    }
+
+    fun preOrder(node: BinaryTreeNode? = this, nodeDescription: String = "root") {
+        if (node != null) {
+            println("$node -- $nodeDescription")
+            inorder(node.left, "left")
+            inorder(node.right, "right")
+        }
+    }
+
+    fun postOrder(node: BinaryTreeNode? = this, nodeDescription: String = "root") {
+        if (node != null) {
+            inorder(node.left, "left")
+            inorder(node.right, "right")
+            println("$node -- $nodeDescription")
+        }
+    }
+
 
     fun descendants(node: BinaryTreeNode? = this, lineCounter: Int = 0) {
         if (node != null) {
@@ -227,6 +251,7 @@ class BinaryTreeNode(var left: BinaryTreeNode?, private val data: Int, var right
 
 
     }
+
     private fun leafText(isLeaf: Boolean = false): String {
         return if (isLeaf) "::leaf" else ""
     }
@@ -237,7 +262,8 @@ fun main() {
     root.left!!.left = BinaryTreeNode(BinaryTreeNode(null, 5, null), 4, null)
     root.left!!.right = BinaryTreeNode(null, 6, BinaryTreeNode(null, 11, null))
     root.right!!.right = BinaryTreeNode(null, 7, null)
-    root.right!!.left = BinaryTreeNode(null, 9, null)
+    root.right!!.left = BinaryTreeNode(null, 9, BinaryTreeNode(null, 13, null))
 
-    root.descendants(root)
+//    root.descendants(root)
+    root.postOrder()
 }
