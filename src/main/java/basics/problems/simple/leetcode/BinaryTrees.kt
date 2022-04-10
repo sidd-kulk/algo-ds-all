@@ -1,6 +1,7 @@
 package basics.problems.simple.leetcode
 
 import java.lang.StringBuilder
+import kotlin.math.max
 
 object BinaryTrees {
     val list = mutableListOf<String>()
@@ -200,6 +201,20 @@ class BinaryTreeNode(var left: BinaryTreeNode?, private val data: Int, var right
         return this.data.toString()
     }
 
+    fun maxDepth(): Int {
+        fun inner(node: BinaryTreeNode?): Int {
+            if (node != null) {
+                val leftTreeDepth = inner(node.left)
+                val rightTreeDepth = inner(node.right)
+
+                return if (leftTreeDepth > rightTreeDepth) leftTreeDepth + 1
+                else rightTreeDepth + 1
+            }
+            return 0
+        }
+        return inner(this)
+    }
+
     fun inorder(node: BinaryTreeNode? = this, nodeDescription: String = "root") {
         if (node != null) {
             inorder(node.left, "left")
@@ -265,5 +280,5 @@ fun main() {
     root.right!!.left = BinaryTreeNode(null, 9, BinaryTreeNode(null, 13, null))
 
 //    root.descendants(root)
-    root.postOrder()
+    println(root.maxDepth())
 }
