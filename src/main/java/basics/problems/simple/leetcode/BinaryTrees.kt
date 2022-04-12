@@ -226,15 +226,15 @@ class BinaryTreeNode(var left: BinaryTreeNode?, private val data: Int, var right
     fun preOrder(node: BinaryTreeNode? = this, nodeDescription: String = "root") {
         if (node != null) {
             println("$node -- $nodeDescription")
-            inorder(node.left, "left")
-            inorder(node.right, "right")
+            preOrder(node.left, "left")
+            preOrder(node.right, "right")
         }
     }
 
     fun postOrder(node: BinaryTreeNode? = this, nodeDescription: String = "root") {
         if (node != null) {
-            inorder(node.left, "left")
-            inorder(node.right, "right")
+            postOrder(node.left, "left")
+            postOrder(node.right, "right")
             println("$node -- $nodeDescription")
         }
     }
@@ -273,12 +273,18 @@ class BinaryTreeNode(var left: BinaryTreeNode?, private val data: Int, var right
 }
 
 fun main() {
-    val root = BinaryTreeNode(BinaryTreeNode(null, 2, null), 1, BinaryTreeNode(null, 3, null))
-    root.left!!.left = BinaryTreeNode(BinaryTreeNode(null, 5, null), 4, null)
-    root.left!!.right = BinaryTreeNode(null, 6, BinaryTreeNode(null, 11, null))
+//    val root = BinaryTreeNode(BinaryTreeNode(null, 2, null), 1, BinaryTreeNode(null, 3, null))
+//    root.left!!.left = BinaryTreeNode(BinaryTreeNode(null, 5, null), 4, null)
+//    root.left!!.right = BinaryTreeNode(null, 6, BinaryTreeNode(null, 11, null))
+//    root.right!!.right = BinaryTreeNode(null, 7, null)
+//    root.right!!.left = BinaryTreeNode(null, 9, BinaryTreeNode(null, 13, null))
+    val root = BinaryTreeNode(BinaryTreeNode(null, 2, null), 1, BinaryTreeNode(null, 6, null))
+    root.left!!.left =  BinaryTreeNode(null, 3, null)
+    root.left!!.right = BinaryTreeNode(BinaryTreeNode(BinaryTreeNode(null, 9, null), 5, null), 4, BinaryTreeNode(null, 8, null))
+
     root.right!!.right = BinaryTreeNode(null, 7, null)
-    root.right!!.left = BinaryTreeNode(null, 9, BinaryTreeNode(null, 13, null))
 
 //    root.descendants(root)
-    println(root.maxDepth())
+//    println(root.maxDepth())
+    root.inorder()
 }
