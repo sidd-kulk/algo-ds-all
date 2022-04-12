@@ -76,6 +76,11 @@ class QueueUsingLinkedList<T> {
         return linkedList.peek()
     }
 
+    fun reverse(): QueueUsingLinkedList<T> {
+        this.linkedList.reverse()
+        return this
+    }
+
     override fun toString(): String {
         return linkedList.joinToString(",")
     }
@@ -83,15 +88,12 @@ class QueueUsingLinkedList<T> {
 
 fun main() {
     val q = QueueUsingLinkedList<Int>()
-//    q.enqueue(4)
-//    q.enqueue(2)
-//    q.enqueue(3)
+    q.enqueue(4)
+    q.enqueue(2)
+    q.enqueue(3)
     q.dequeue()
-    println(q)
-    println(q.rear)
-    println(q.front)
-    println(q.peek())
-
+//    println(q)
+    println(q.reverse())
 //    val s = Stack<Int>()
 //    s.push(1)
 //    s.push(2)
