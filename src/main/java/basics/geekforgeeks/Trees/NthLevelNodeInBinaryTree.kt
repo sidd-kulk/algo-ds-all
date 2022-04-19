@@ -1,7 +1,5 @@
 package basics.geekforgeeks.Trees
 
-import com.sun.source.tree.Tree
-
 object NthLevelNodeInBinaryTree {
     fun get(root: TreeNode?, k: Int): MutableList<Int> {
         fun inner(node: TreeNode?, c: Int, list: MutableList<Int>): MutableList<Int> {
@@ -25,15 +23,6 @@ object NthLevelNodeInBinaryTree {
         }
 
         return inner(root, k, mutableListOf())
-    }
-}
-
-class TreeNode(var `val`: Int) {
-    var left: TreeNode? = null
-    var right: TreeNode? = null
-
-    override fun toString(): String {
-        return `val`.toString()
     }
 }
 
