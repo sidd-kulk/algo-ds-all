@@ -201,14 +201,10 @@ class BinaryTreeNode(var left: BinaryTreeNode?, private val data: Int, var right
         return this.data.toString()
     }
 
-    fun maxDepth(): Int {
+    fun maxHeight(): Int {
         fun inner(node: BinaryTreeNode?): Int {
             if (node != null) {
-                val leftTreeDepth = inner(node.left)
-                val rightTreeDepth = inner(node.right)
-
-                return if (leftTreeDepth > rightTreeDepth) leftTreeDepth + 1
-                else rightTreeDepth + 1
+                return Math.max(inner(node.left), inner(node.right)) + 1
             }
             return 0
         }
@@ -278,13 +274,35 @@ fun main() {
 //    root.left!!.right = BinaryTreeNode(null, 6, BinaryTreeNode(null, 11, null))
 //    root.right!!.right = BinaryTreeNode(null, 7, null)
 //    root.right!!.left = BinaryTreeNode(null, 9, BinaryTreeNode(null, 13, null))
-    val root = BinaryTreeNode(BinaryTreeNode(null, 2, null), 1, BinaryTreeNode(null, 6, null))
-    root.left!!.left =  BinaryTreeNode(null, 3, null)
-    root.left!!.right = BinaryTreeNode(BinaryTreeNode(BinaryTreeNode(null, 9, null), 5, null), 4, BinaryTreeNode(null, 8, null))
+//    val root = BinaryTreeNode(BinaryTreeNode(null, 2, null), 1, BinaryTreeNode(null, 6, null))
+//    root.left!!.left = BinaryTreeNode(null, 3, null)
+//    root.left!!.right =
+//        BinaryTreeNode(BinaryTreeNode(BinaryTreeNode(null, 9, null), 5, null), 4, BinaryTreeNode(null, 8, null))
 
-    root.right!!.right = BinaryTreeNode(null, 7, null)
+//    root.right!!.right = BinaryTreeNode(null, 7, null)
 
 //    root.descendants(root)
 //    println(root.maxDepth())
-    root.inorder()
+//    println(root.maxHeight())
+
+    val tn = TreeNode(1)
+    tn.left = TreeNode(2)
+    tn.left?.left = TreeNode(4)
+    tn.right = TreeNode(3)
+    println(maxDepth(tn))
+}
+
+class TreeNode(var `val`: Int) {
+    var left: TreeNode? = null
+    var right: TreeNode? = null
+}
+
+fun maxDepth(root: TreeNode?): Int {
+    fun inner(node: TreeNode?): Int {
+        if (node != null) {
+            return Math.max(inner(node.left), inner(node.right)) + 1
+        }
+        return 0
+    }
+    return inner(root)
 }
