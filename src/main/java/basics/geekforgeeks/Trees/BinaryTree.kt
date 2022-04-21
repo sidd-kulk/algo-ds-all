@@ -50,13 +50,57 @@ fun levelOrderTraversalUsingQueue(root: TreeNode?): MutableList<TreeNode?> {
     return list
 }
 
+fun levelOrderTraversalNewLinesWithQueueWithNullMarker(root: TreeNode?) {
+    val queue = Queue<TreeNode?>()
+    queue.enqueue(root)
+    queue.enqueue(null)
+    while (queue.size() > 1) {
+        val current = queue.dequeue()
+        if (current == null) {
+            print("\n")
+            queue.enqueue(null)
+            continue
+        }
+        print("$current,")
+        if (current.left != null) {
+            queue.enqueue(current.left)
+        }
+        if (current.right != null) {
+            queue.enqueue(current.right)
+        }
+    }
+}
+
+fun levelOrderTraversalNewLinesWithQueueWithoutNullMarker(root: TreeNode?) {
+    val queue = Queue<TreeNode?>()
+    queue.enqueue(root)
+    while (!queue.empty()) {
+        for (i in 0 until queue.size()) {
+            val current = queue.dequeue()
+            print("$current,")
+            if (current?.left != null) {
+                queue.enqueue(current.left)
+            }
+            if (current?.right != null) {
+                queue.enqueue(current.right)
+            }
+        }
+        println()
+    }
+}
+
 fun main() {
     val root = TreeNode(1)
     root.left = TreeNode(2)
     root.left?.left = TreeNode(3)
+    root.left?.right = TreeNode(6)
 
     root.right = TreeNode(4)
     root.right?.right = TreeNode(5)
+    root.right?.left = TreeNode(7)
+    root.right?.left?.right = TreeNode(8)
 
-    println(levelOrderTraversalUsingQueue(root))
+//    levelOrderTraversalUsingQueue(root)
+    levelOrderTraversalNewLinesWithQueueWithNullMarker(root)
+    levelOrderTraversalNewLinesWithQueueWithoutNullMarker(root)
 }

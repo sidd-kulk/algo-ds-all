@@ -29,6 +29,8 @@ class Queue<T> { // Using Stacks
         return stack.size == 0
     }
 
+    fun size() = this.stack.size
+
     override fun toString(): String {
         val sb = StringBuilder()
         for (i in stack) {
