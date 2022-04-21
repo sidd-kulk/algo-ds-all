@@ -1,5 +1,7 @@
 package basics.geekforgeeks.Trees
 
+import basics.problems.simple.stack_queue.Queue
+
 class TreeNode(var `val`: Int) {
     var left: TreeNode? = null
     var right: TreeNode? = null
@@ -7,16 +9,6 @@ class TreeNode(var `val`: Int) {
     override fun toString(): String {
         return `val`.toString()
     }
-}
-
-fun main() {
-    val root = TreeNode(1)
-    root.left = TreeNode(2)
-    root.left?.left = TreeNode(4)
-
-    root.right = TreeNode(3)
-
-    println(NthLevelNodeInBinaryTree.get(root, 2))
 }
 
 fun levelOrderTraversalBruteForce(root: TreeNode) {
@@ -39,4 +31,32 @@ fun levelOrderTraversalBruteForce(root: TreeNode) {
     while (map[counter] != null) {
         print(map[counter++]?.joinToString(",") + ",")
     }
+}
+
+fun levelOrderTraversalUsingQueue(root: TreeNode?): MutableList<TreeNode?> {
+    val queue = Queue<TreeNode?>()
+    val list = mutableListOf<TreeNode?>()
+    queue.enqueue(root)
+    while (!queue.empty()) {
+        val current = queue.dequeue()
+        list.add(current)
+        if (current?.left != null) {
+            queue.enqueue(current.left)
+        }
+        if (current?.right != null) {
+            queue.enqueue(current.right)
+        }
+    }
+    return list
+}
+
+fun main() {
+    val root = TreeNode(1)
+    root.left = TreeNode(2)
+    root.left?.left = TreeNode(3)
+
+    root.right = TreeNode(4)
+    root.right?.right = TreeNode(5)
+
+    println(levelOrderTraversalUsingQueue(root))
 }
