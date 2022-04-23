@@ -90,6 +90,14 @@ fun levelOrderTraversalNewLinesWithQueueWithoutNullMarker(root: TreeNode?) {
 }
 
 fun main() {
+    val root = constructBinaryTree()
+
+//    levelOrderTraversalUsingQueue(root)
+//    levelOrderTraversalNewLinesWithQueueWithNullMarker(root)
+    levelOrderTraversalNewLinesWithQueueWithoutNullMarker(root)
+}
+
+fun constructBinaryTree(): TreeNode {
     val root = TreeNode(1)
     root.left = TreeNode(2)
     root.left?.left = TreeNode(3)
@@ -99,8 +107,5 @@ fun main() {
     root.right?.right = TreeNode(5)
     root.right?.left = TreeNode(7)
     root.right?.left?.right = TreeNode(8)
-
-//    levelOrderTraversalUsingQueue(root)
-    levelOrderTraversalNewLinesWithQueueWithNullMarker(root)
-    levelOrderTraversalNewLinesWithQueueWithoutNullMarker(root)
+    return root
 }
