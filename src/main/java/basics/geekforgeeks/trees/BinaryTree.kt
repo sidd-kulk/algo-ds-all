@@ -1,4 +1,4 @@
-package basics.geekforgeeks.Trees
+package basics.geekforgeeks.trees
 
 import basics.problems.simple.stack_queue.Queue
 

@@ -1,4 +1,4 @@
-package basics.geekforgeeks.Trees
+package basics.geekforgeeks.trees
 
 object NthLevelNodeInBinaryTree {
     fun get(root: TreeNode?, k: Int): MutableList<Int> {
