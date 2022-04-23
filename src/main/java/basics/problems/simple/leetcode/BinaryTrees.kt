@@ -297,7 +297,7 @@ class TreeNode(var `val`: Int) {
     var right: TreeNode? = null
 }
 
-fun maxDepth(root: TreeNode?): Int {
+fun  maxDepth(root: TreeNode?): Int {
     fun inner(node: TreeNode?): Int {
         if (node != null) {
             return Math.max(inner(node.left), inner(node.right)) + 1
