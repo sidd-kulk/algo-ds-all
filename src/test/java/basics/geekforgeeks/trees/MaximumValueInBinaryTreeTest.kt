@@ -8,7 +8,8 @@ internal class MaximumValueInBinaryTreeTest {
     @Test
     fun find() {
         val root = constructTestBinaryTree()
-        Assertions.assertEquals(8, MaximumValueInBinaryTree.find(root)?.`val`)
+        Assertions.assertEquals(8, MaximumValueInBinaryTree.findRecursive(root)?.`val`)
+        Assertions.assertEquals(8, MaximumValueInBinaryTree.findIterative(root)?.`val`)
     }
 
     private fun constructTestBinaryTree(): TreeNode {
