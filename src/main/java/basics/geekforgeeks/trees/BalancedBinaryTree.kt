@@ -5,13 +5,14 @@ import kotlin.math.max
 
 // https://leetcode.com/problems/balanced-binary-tree/
 object BalancedBinaryTree {
-    fun checkBruteForce(root: TreeNode?): Boolean {
-        fun depth(node: TreeNode?): Int {
-            if (node == null) return 0
-            val leftDepth = depth(node.left)
-            val rightDepth = depth(node.right)
-            return max(leftDepth, rightDepth) + 1
-        }
+    private fun depth(node: TreeNode?): Int {
+        if (node == null) return 0
+        val leftDepth = depth(node.left)
+        val rightDepth = depth(node.right)
+        return max(leftDepth, rightDepth) + 1
+    }
+
+    fun checkBruteForce(root: TreeNode?): Boolean { // O(n^2)
         if (root == null) return true
         val leftDepth = depth(root.left)
         val rightDepth = depth(root.right)

@@ -1,6 +1,16 @@
 package basics.geekforgeeks.trees
 
 import basics.problems.simple.stack_queue.Queue
+import com.sun.source.tree.Tree
+import java.lang.reflect.Method
+import java.math.BigInteger
+import java.security.MessageDigest
+import java.util.concurrent.ThreadLocalRandom
+import kotlin.concurrent.thread
+import kotlin.coroutines.CoroutineContext
+import kotlin.math.abs
+import kotlin.random.Random
+import kotlin.system.exitProcess
 
 class TreeNode(var `val`: Int) {
     var left: TreeNode? = null
@@ -90,11 +100,33 @@ fun levelOrderTraversalNewLinesWithQueueWithoutNullMarker(root: TreeNode?) {
 }
 
 fun main() {
-    val root = constructBinaryTree()
+//    val root = constructBinaryTree()
+//
+//    val charPool: List<Char> = ('a'..'z') + listOf()
 
 //    levelOrderTraversalUsingQueue(root)
 //    levelOrderTraversalNewLinesWithQueueWithNullMarker(root)
-    levelOrderTraversalNewLinesWithQueueWithoutNullMarker(root)
+//    levelOrderTraversalNewLinesWithQueueWithoutNullMarker(root)
+    val preHash = md5("sid")
+    val random = Random(10)
+    for (k in 0..10) {
+        thread {
+            for (i in 1 until 2) {
+                println(abs(random.nextInt() % 1000))
+//                val str = randomString((Math.random()*100).toInt())
+//                if (md5(str) == preHash) {
+//                    println("Match!")
+//                    exitProcess(0)
+//                }
+            }
+        }
+    }
+
+}
+
+fun md5(input: String): String {
+    val md = MessageDigest.getInstance("MD5")
+    return BigInteger(1, md.digest(input.toByteArray())).toString(16).padStart(32, '0')
 }
 
 fun constructBinaryTree(): TreeNode {
@@ -107,5 +139,22 @@ fun constructBinaryTree(): TreeNode {
     root.right?.right = TreeNode(5)
     root.right?.left = TreeNode(7)
     root.right?.left?.right = TreeNode(8)
+
     return root
 }
+
+fun randomString(length: Int = 100): String {
+    val charPool: List<Char> = listOf<Char>() + ('a'..'z')
+    return (1..length)
+        .map { kotlin.random.Random.nextInt(0, charPool.size) }
+        .map(charPool::get)
+        .joinToString("");
+}
+
+//        thread {
+//            val STRING_LENGTH = 30000
+//
+//            for (i in 0 until 30000) {
+//
+//            }
+//        }

@@ -21,14 +21,10 @@ object ChildrenSumPropertyBinaryTree {
         if (root == null) return true
         if (root.left == null && root.right == null) return true
 
-        var sum: Int = 0
-        if (root.left != null) {
-            sum += root.left!!.`val`
-        }
+        var sum = 0
+        if (root.left != null) sum += root.left!!.`val`
 
-        if (root.right != null) {
-            sum += root.right!!.`val`
-        }
+        if (root.right != null) sum += root.right!!.`val`
 
         return (sum == root.`val` && validateBetter(root.left) && validateBetter(root.right))
     }
