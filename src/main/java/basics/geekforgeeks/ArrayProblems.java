@@ -40,12 +40,37 @@ public class ArrayProblems {
         return profit;
     }
 
-    public static int trappedRainWater(int[] arr) {
+    public static int maximumSubArrayBruteForce(int[] arr) {
+        if (arr == null || arr.length == 0) return 0;
 
+        int max = arr[0];
+        for (int i = 0; i < arr.length; i++) {
+            int sumSoFar = 0;
+            for (int j = i; j < arr.length; j++) {
+                sumSoFar += arr[j];
+                max = Math.max(max, sumSoFar);
+            }
+
+        }
+        return max;
     }
 
+    public static int maximumSubArrayOptimized(int[] arr) { // LeetCode Certified
+        if (arr == null || arr.length == 0) return 0;
+
+        int max = arr[0];
+        int sumSoFar = arr[0];
+        for (int i = 1; i < arr.length; i++) {
+            sumSoFar = Math.max(sumSoFar + arr[i], arr[i]);
+            max = Math.max(max, sumSoFar);
+        }
+
+        return max;
+    }
+
+
     public static void main(String[] args) {
-        System.out.println(ArrayProblems.stockBuyProblem(new int[]{17, 10, 4, 3, 8, 5, 7}));
+        System.out.println(ArrayProblems.maximumSubArrayOptimized(new int[]{3,8,-2,4,-5,6}));
     }
 
 }
