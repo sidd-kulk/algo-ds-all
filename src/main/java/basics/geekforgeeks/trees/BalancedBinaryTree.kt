@@ -19,8 +19,6 @@ object BalancedBinaryTree {
 
         return abs(leftDepth - rightDepth) <= 1 && checkBruteForce(root.left) && checkBruteForce(root.right)
     }
-
-    fun insert
 }
 
 fun main() {
