@@ -3,21 +3,6 @@ package basics.geekforgeeks.trees.binarysearchtree;
 import basics.Utils;
 
 public class BinarySearchTreeV2 {
-    static int minDiff = Integer.MAX_VALUE;
-    static int nodeValue = 0;
-
-    public static void closestInBinaryTree(BST tree, int target) {
-        if (tree == null) return;
-
-        int diff = Math.abs(tree.value - target);
-        if (minDiff > diff) {
-            minDiff = diff;
-            nodeValue = tree.value;
-        }
-
-        closestInBinaryTree(tree.left, target);
-        closestInBinaryTree(tree.right, target);
-    }
 
     static int findMinimum(BST tree) {
         if(tree == null) throw new RuntimeException("Null Root");
@@ -62,6 +47,46 @@ public class BinarySearchTreeV2 {
         }
     }
 
+    public static int closestInBinaryTree(BST tree, int target) {
+        if (tree == null) return Integer.MAX_VALUE;
+
+        int leftNodeValueParam = closestInBinaryTree(tree.left, target);
+        int rightNodeValueParam = closestInBinaryTree(tree.right, target);
+        int diff = Math.abs(tree.value - target);
+        return Utils.min(diff, leftNodeValueParam, rightNodeValueParam);
+    }
+
+    public static int findClosestValueInBst(BST tree, int target) {
+        if (tree == null) return Integer.MAX_VALUE;
+
+        int leftNodeValueParam = findClosestValueInBst(tree.left, target);
+        int rightNodeValueParam = findClosestValueInBst(tree.right, target);
+        int currNode = tree.value;
+        int diff = Math.abs(currNode - target);
+
+        if (leftNodeValueParam != Integer.MAX_VALUE && diff > Math.abs(target - leftNodeValueParam)) {
+            currNode = leftNodeValueParam;
+        }
+        if (rightNodeValueParam != Integer.MAX_VALUE && Math.abs(currNode - target) > Math.abs(target - rightNodeValueParam)) {
+            currNode = rightNodeValueParam;
+        }
+        return currNode;
+    }
+
+    static int findClosestVal(BST tree, int target, int closest) {
+        if (tree == null) {
+            return closest;
+        } else {
+            if (Math.abs(tree.value - target) < Math.abs(closest - target)) {
+                closest = tree.value;
+            }
+            System.out.println("closest="+closest+", current="+tree.value);
+            if (target < tree.value) {
+                return findClosestVal(tree.left, target, closest);
+            } else {
+                return findClosestVal(tree.right, target, closest);
+            }
+        }
     }
 
     public static void main(String[] args) {
@@ -69,8 +94,7 @@ public class BinarySearchTreeV2 {
 
         bst.left = new BST(5);
         bst.left.left = new BST(2);
-        bst.left.right = new BST(5);
-        bst.left.left.left = new BST(1);
+        bst.left.right = new BST(6);
         bst.left.left.left = new BST(-1);
 
         bst.right = new BST(15);
@@ -78,8 +102,9 @@ public class BinarySearchTreeV2 {
         bst.right.left.right = new BST(14);
         bst.right.right = new BST(22);
 
-        closestInBinaryTree(bst, 3);
+//        int nodeValue = closestInBinaryTree(bst, -99);
         System.out.println("$$$$$$$$$$$$$$$$$$$$$");
-        System.out.println(nodeValue);
+        int node = findClosestVal(bst, 15, Integer.MAX_VALUE);
+        System.out.println(node);
     }
 }
