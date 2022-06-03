@@ -1,5 +1,6 @@
 package basics.geekforgeeks.trees
 
+import basics.Utils
 import basics.problems.simple.stack_queue.Queue
 import com.sun.source.tree.Tree
 import java.lang.reflect.Method
@@ -20,6 +21,29 @@ class TreeNode(var `val`: Int) {
         return `val`.toString()
     }
 }
+
+fun closest(root: TreeNode, target: Int): Int {
+    TODO()
+}
+
+fun min(root: TreeNode?): Int {
+    if (root == null) return Int.MAX_VALUE
+
+    val leftMin = min(root.left)
+    val rightMin = min(root.right)
+
+    return Utils.min(root.`val`, leftMin, rightMin)
+}
+
+fun max(root: TreeNode?): Int {
+    if (root == null) return Int.MIN_VALUE
+
+    val leftMin = max(root.left)
+    val rightMin = max(root.right)
+
+    return Utils.max(root.`val`, leftMin, rightMin)
+}
+
 
 fun levelOrderTraversalBruteForce(root: TreeNode) {
     fun inner(node: TreeNode?, map: MutableMap<Int, MutableList<Int>>, index: Int): MutableMap<Int, MutableList<Int>> {
@@ -100,27 +124,8 @@ fun levelOrderTraversalNewLinesWithQueueWithoutNullMarker(root: TreeNode?) {
 }
 
 fun main() {
-//    val root = constructBinaryTree()
-//
-//    val charPool: List<Char> = ('a'..'z') + listOf()
-
-//    levelOrderTraversalUsingQueue(root)
-//    levelOrderTraversalNewLinesWithQueueWithNullMarker(root)
-//    levelOrderTraversalNewLinesWithQueueWithoutNullMarker(root)
-    val preHash = md5("sid")
-    val random = Random(10)
-    for (k in 0..10) {
-        thread {
-            for (i in 1 until 2) {
-                println(abs(random.nextInt() % 1000))
-//                val str = randomString((Math.random()*100).toInt())
-//                if (md5(str) == preHash) {
-//                    println("Match!")
-//                    exitProcess(0)
-//                }
-            }
-        }
-    }
+    val root = constructBinaryTree()
+    println(closest(root, 5))
 
 }
 
