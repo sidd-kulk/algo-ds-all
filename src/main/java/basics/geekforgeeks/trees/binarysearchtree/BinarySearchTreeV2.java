@@ -4,6 +4,8 @@ import basics.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class BinarySearchTreeV2 {
 
@@ -77,13 +79,34 @@ public class BinarySearchTreeV2 {
     }
 
     static List<Integer> ls = new ArrayList<>();
-    static List<Integer> preorder(BST tree){
-        if(tree == null) return ls;
+
+    static List<Integer> preorder(BST tree) {
+        if (tree == null) return ls;
 
         ls.add(tree.value);
         preorder(tree.left);
         preorder(tree.right);
         return ls;
+    }
+
+    private static List<Integer> preorder(BST tree, List<Integer> list) {
+        if (tree == null) return list;
+        if (list == null) list = new ArrayList<>();
+
+        list.add(tree.value);
+        preorder(tree.left, list);
+        preorder(tree.right, list);
+        return list;
+    }
+
+    private static List<Integer> inorder(BST tree, List<Integer> list) {
+        if (tree == null) return list;
+        if (list == null) list = new ArrayList<>();
+
+        inorder(tree.left, list);
+        list.add(tree.value);
+        inorder(tree.right, list);
+        return list;
     }
 
     static int findClosestVal(BST tree, int target, int closest) {
@@ -102,6 +125,22 @@ public class BinarySearchTreeV2 {
         }
     }
 
+    static Map<Integer, List<Integer>> verticalOrder = null;
+
+    static void printVertical(BST tree, int hd) {
+        if (tree == null) return;
+        if (verticalOrder == null) verticalOrder = new TreeMap<>();
+
+        List<Integer> temp = verticalOrder.get(hd);
+        if (temp == null) temp = new ArrayList<>();
+
+        temp.add(tree.value);
+        verticalOrder.put(hd, temp);
+
+        printVertical(tree.left, hd - 1);
+        printVertical(tree.right, hd + 1);
+    }
+
     public static void main(String[] args) {
         BST bst = new BST(10);
 
@@ -115,7 +154,8 @@ public class BinarySearchTreeV2 {
         bst.right.left.right = new BST(14);
         bst.right.right = new BST(22);
 
-        System.out.println(preorder(bst));
+        printVertical(bst, 0);
+        System.out.println(verticalOrder);
 
     }
 
@@ -124,16 +164,33 @@ public class BinarySearchTreeV2 {
     }
 
     private static boolean isBalanced(BST tree, int lower, int upper) {
-        if(tree == null) return true;
+        if (tree == null) return true;
 
-        System.out.println("currNode="+tree);
+        System.out.println("currNode=" + tree);
         boolean isLeftBalanced = isBalanced(tree.left, lower, tree.value);
         boolean isRightBalanced = isBalanced(tree.right, tree.value, upper);
 
-        System.out.println("isLeftBalanced="+isLeftBalanced+", isRightBalanced="+isRightBalanced);
+        System.out.println("isLeftBalanced=" + isLeftBalanced + ", isRightBalanced=" + isRightBalanced);
 
         return (isLeftBalanced && isRightBalanced && tree.value >= lower && tree.value <= upper);
     }
+
+    static BST generateTreeFromSortedArray(List<Integer> list) {
+        return generateTreeFromSortedArray(list, 0, list.size() - 1, null);
+    }
+
+    private static BST generateTreeFromSortedArray(List<Integer> list, int i, int j, BST tree) {
+        if (i > j) return null;
+        int mid = (i + j) / 2;
+        int value = list.get(mid);
+        BST newNode = new BST(value);
+        BST left = generateTreeFromSortedArray(list, i, mid - 1, tree);
+        BST right = generateTreeFromSortedArray(list, i, mid + 1, tree);
+        newNode.left = left;
+        newNode.right = right;
+        return newNode;
+    }
+
 }
 
 
