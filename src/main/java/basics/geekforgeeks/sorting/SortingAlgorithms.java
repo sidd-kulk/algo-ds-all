@@ -26,8 +26,66 @@ public class SortingAlgorithms {
         return nums;
     }
 
+    static int[] mergeFunction(int[] nums, int low, int mid, int high) {
+        if (nums == null) return null;
+        if (low < 0 || low > mid || low > high || mid > high || high > nums.length - 1) {
+            throw new RuntimeException("Incorrect input");
+        }
+
+        int[] nums1 = new int[mid - low + 1];
+        int[] nums2 = new int[high - mid];
+
+        for (int i = low; i <= mid; i++) {
+            nums1[i] = nums[low + i];
+        }
+
+        for (int j = 0; j < nums2.length; j++) {
+            nums2[j] = nums[mid + j + 1];
+        }
+
+        return mergeTwoSortedArrays(nums1, nums2);
+    }
+
+    static int[] mergeTwoSortedArrays(int[] nums1, int[] nums2) {
+        if (nums1 == null) return nums2;
+        if (nums2 == null) return nums1;
+
+        int[] result = new int[nums1.length + nums2.length];
+
+        int nums1Index = 0, nums2Index = 0, index = 0;
+        while (nums1Index < nums1.length && nums2Index < nums2.length) {
+            if (nums1[nums1Index] <= nums2[nums2Index]) {
+                result[index] = nums1[nums1Index];
+                index++;
+                nums1Index++;
+            } else if (nums1[nums1Index] > nums2[nums2Index]) {
+                result[index] = nums2[nums2Index];
+                index++;
+                nums2Index++;
+            }
+        }
+
+        while (nums1Index < nums1.length) {
+            result[index] = nums1[nums1Index];
+            index++;
+            nums1Index++;
+        }
+
+        while (nums2Index < nums2.length) {
+            result[index] = nums2[nums2Index];
+            index++;
+            nums2Index++;
+        }
+        return result;
+    }
+
+
     public static void main(String[] args) {
-        int[] nums = new int[]{3, 1, 6, 4, 7, -1};
-        System.out.println(Arrays.toString(bubbleSort(nums)));
+        int[] nums1 = new int[]{1, 2, 3};
+        int[] nums2 = new int[]{2, 4, 6, 8};
+
+        int[] nums = new int[]{10, 15, 20, 40, 8, 11, 55};
+
+        System.out.println(Arrays.toString(mergeFunction(nums, 0, 3, 6)));
     }
 }
