@@ -25,15 +25,6 @@ public class GreedyProblems {
         return minimumNumberOfCoins;
     }
 
-    public static void main(String[] args) {
-//        int[] nums = new int[]{10, 6, 2};
-//        Arrays.stream(nums).boxed().sorted(Collections.reverseOrder()).mapToInt(Integer::intValue).toArray();
-//        System.out.println(minimumNumberOfCoins(nums, 189));
-
-        Activity[] activities = new Activity[] {new Activity(12,25), new Activity(10,20), new Activity(20,30)};
-        System.out.println(activitySelection(activities));
-    }
-
     static int activitySelection(Activity[] activities) {
         if (activities == null) return 0;
         Arrays.sort(activities);
@@ -51,8 +42,67 @@ public class GreedyProblems {
         return maxActivities;
     }
 
+    static int jobSequencing(Job[] jobs) {
+        if (jobs == null) return 0;
+
+        int max = Arrays.stream(jobs).map(Job::getDeadline).max(Integer::compare).get();
+        int[] profits = new int[max];
+
+        Arrays.sort(jobs, Collections.reverseOrder());
+        for (Job job : jobs) {
+            int deadline = job.getDeadline() - 1;
+            if (profits[deadline] == 0) {
+                profits[deadline] = job.getProfit();
+            }
+        }
+
+        return Arrays.stream(profits).sum();
+    }
+
+
+    public static void main(String[] args) {
+//        int[] nums = new int[]{10, 6, 2};
+//        Arrays.stream(nums).boxed().sorted(Collections.reverseOrder()).mapToInt(Integer::intValue).toArray();
+//        System.out.println(minimumNumberOfCoins(nums, 189));
+
+//        Activity[] activities = new Activity[]{new Activity(12, 25), new Activity(10, 20), new Activity(20, 30)};
+//        System.out.println(activitySelection(activities));
+
+        Job[] jobs = new Job[]{new Job(2, 50), new Job(2, 60), new Job(3, 20), new Job(3, 30)};
+        System.out.println(jobSequencing(jobs));
+    }
 }
 
+class Job implements Comparable<Job> {
+    private int deadline;
+    private int profit;
+
+    Job(int deadline, int profit) {
+        this.deadline = deadline;
+        this.profit = profit;
+    }
+
+    public int getDeadline() {
+        return deadline;
+    }
+
+    public int getProfit() {
+        return profit;
+    }
+
+    @Override
+    public int compareTo(@NotNull Job otherJob) {
+        return (this.getProfit() - otherJob.getProfit());
+    }
+
+    @Override
+    public String toString() {
+        return "Job{" +
+                "deadline=" + deadline +
+                ", profit=" + profit +
+                '}';
+    }
+}
 
 class Activity implements Comparable<Activity> {
     private int startTime;
