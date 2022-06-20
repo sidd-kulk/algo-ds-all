@@ -26,6 +26,21 @@ public class SortingAlgorithms {
         return nums;
     }
 
+    static int[] mergeSort(int[] nums) {
+        return mergeSort(nums, 0, nums.length - 1);
+    }
+
+    private static int[] mergeSort(int[] nums, int low, int high) {
+        if (high > low) {
+            int mid = (low + high) / 2;
+            mergeSort(nums, low, mid);
+            mergeSort(nums, mid + 1, high);
+            mergeFunction(nums, low, mid, high);
+        }
+
+        return nums;
+    }
+
     static int[] mergeFunction(int[] nums, int low, int mid, int high) {
         if (nums == null) return null;
         if (low < 0 || low > mid || low > high || mid > high || high > nums.length - 1) {
@@ -35,7 +50,7 @@ public class SortingAlgorithms {
         int[] nums1 = new int[mid - low + 1];
         int[] nums2 = new int[high - mid];
 
-        for (int i = low; i <= mid; i++) {
+        for (int i = low; i < nums1.length; i++) {
             nums1[i] = nums[low + i];
         }
 
@@ -86,6 +101,6 @@ public class SortingAlgorithms {
 
         int[] nums = new int[]{10, 15, 20, 40, 8, 11, 55};
 
-        System.out.println(Arrays.toString(mergeFunction(nums, 0, 3, 6)));
+        System.out.println(Arrays.toString(mergeSort(nums)));
     }
 }
