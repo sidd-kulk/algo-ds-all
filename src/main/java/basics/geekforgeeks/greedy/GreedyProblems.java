@@ -28,15 +28,18 @@ public class GreedyProblems {
 
     static int activitySelection(Activity[] activities) {
         if (activities == null) return 0;
-        Arrays.sort(activities);
+
+        Activity[] clonedActivities = activities.clone();
+        Arrays.sort(clonedActivities);
 
         int maxActivities = 1;
         int previousActivityEndIndex = 0;
-        for (int i = 1; i < activities.length; i++) {
-            int currentActivityStart = activities[i].getStartTime();
-            int previousActivityEnd = activities[previousActivityEndIndex].getEndTime();
+        for (int i = 1; i < clonedActivities.length; i++) {
+            int currentActivityStart = clonedActivities[i].getStartTime();
+            int previousActivityEnd = clonedActivities[previousActivityEndIndex].getEndTime();
             if (currentActivityStart >= previousActivityEnd) {
                 maxActivities++;
+                previousActivityEndIndex = i;
             }
         }
 
