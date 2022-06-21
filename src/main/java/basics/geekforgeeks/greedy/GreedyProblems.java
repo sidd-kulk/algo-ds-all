@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Objects;
 
 public class GreedyProblems {
@@ -44,21 +45,41 @@ public class GreedyProblems {
 
     static int jobSequencing(Job[] jobs) {
         if (jobs == null) return 0;
-
-        int max = Arrays.stream(jobs).map(Job::getDeadline).max(Integer::compare).get();
+        Job[] clonedJobs = jobs.clone();
+        int max = Arrays.stream(clonedJobs).map(Job::getDeadline).max(Integer::compare).get();
         int[] profits = new int[max];
 
-        Arrays.sort(jobs, Collections.reverseOrder());
-        for (Job job : jobs) {
-            int deadline = job.getDeadline() - 1;
-            if (profits[deadline] == 0) {
-                profits[deadline] = job.getProfit();
+        Arrays.sort(clonedJobs, Collections.reverseOrder());
+        for (Job job : clonedJobs) {
+            int deadline = job.getDeadline();
+            int i = deadline - 1;
+            while (i > 0 && profits[i] != 0) {
+                i--;
+            }
+            if (profits[i] == 0) {
+                profits[i] = job.getProfit();
             }
         }
 
         return Arrays.stream(profits).sum();
     }
 
+
+    static int jobSequencingCustomComparator(Job[] jobs) {
+        if (jobs == null) return 0;
+
+        Job[] clonedJobs = jobs.clone();
+        Arrays.sort(clonedJobs, JobCustomComparator.getComparator());
+        int previousTaskComletedAt = 0;
+        int maxProfits = 0;
+        for (Job job : clonedJobs) {
+            if (job.getDeadline() > previousTaskComletedAt) {
+                previousTaskComletedAt++;
+                maxProfits += job.getProfit();
+            }
+        }
+        return maxProfits;
+    }
 
     public static void main(String[] args) {
 //        int[] nums = new int[]{10, 6, 2};
@@ -68,8 +89,19 @@ public class GreedyProblems {
 //        Activity[] activities = new Activity[]{new Activity(12, 25), new Activity(10, 20), new Activity(20, 30)};
 //        System.out.println(activitySelection(activities));
 
-        Job[] jobs = new Job[]{new Job(2, 50), new Job(2, 60), new Job(3, 20), new Job(3, 30)};
+//        Job[] jobs = new Job[]{new Job(2, 50), new Job(2, 60), new Job(3, 20), new Job(3, 30)};
+        Job[] jobs = new Job[]{new Job(4, 50), new Job(1, 5), new Job(1, 20), new Job(5, 10), new Job(5, 80)};
         System.out.println(jobSequencing(jobs));
+        System.out.println(jobSequencingCustomComparator(jobs));
+    }
+}
+
+class JobCustomComparator {
+    public static Comparator<Job> getComparator() {
+        Comparator<Job> deadLineComparator = Comparator.comparing(Job::getDeadline);
+        Comparator<Job> profitComparator = Comparator.comparing(Job::getProfit, Collections.reverseOrder());
+
+        return deadLineComparator.thenComparing(profitComparator);
     }
 }
 
