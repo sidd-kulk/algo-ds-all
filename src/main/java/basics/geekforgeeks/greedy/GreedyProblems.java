@@ -38,6 +38,7 @@ public class GreedyProblems {
             int currentActivityStart = clonedActivities[i].getStartTime();
             int previousActivityEnd = clonedActivities[previousActivityEndIndex].getEndTime();
             if (currentActivityStart >= previousActivityEnd) {
+                System.out.println(clonedActivities[i]);
                 maxActivities++;
                 previousActivityEndIndex = i;
             }
@@ -89,13 +90,15 @@ public class GreedyProblems {
 //        Arrays.stream(nums).boxed().sorted(Collections.reverseOrder()).mapToInt(Integer::intValue).toArray();
 //        System.out.println(minimumNumberOfCoins(nums, 189));
 
-//        Activity[] activities = new Activity[]{new Activity(12, 25), new Activity(10, 20), new Activity(20, 30)};
-//        System.out.println(activitySelection(activities));
+//        [[2,15],[36,45],[9,29],[16,23],[4,9]]
+
+        Activity[] activities = new Activity[]{new Activity(2, 15), new Activity(36, 45), new Activity(9, 29), new Activity(16, 23), new Activity(4, 9)};
+        System.out.println(activitySelection(activities));
 
 //        Job[] jobs = new Job[]{new Job(2, 50), new Job(2, 60), new Job(3, 20), new Job(3, 30)};
-        Job[] jobs = new Job[]{new Job(4, 50), new Job(1, 5), new Job(1, 20), new Job(5, 10), new Job(5, 80)};
-        System.out.println(jobSequencing(jobs));
-        System.out.println(jobSequencingCustomComparator(jobs));
+//        Job[] jobs = new Job[]{new Job(4, 50), new Job(1, 5), new Job(1, 20), new Job(5, 10), new Job(5, 80)};
+//        System.out.println(jobSequencing(jobs));
+//        System.out.println(jobSequencingCustomComparator(jobs));
     }
 }
 
