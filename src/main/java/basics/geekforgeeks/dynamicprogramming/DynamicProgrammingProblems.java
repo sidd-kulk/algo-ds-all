@@ -1,5 +1,73 @@
 package basics.geekforgeeks.dynamicprogramming;
 
+import java.util.Arrays;
+
+
+public class DynamicProgrammingProblems {
+
+    public static void main(String[] args) {
+//        System.out.println("Memoized solution = " + LongestCommonSubsequence.longestCommonSubsequence("axyz", "baz"));
+//        System.out.println("Tabulation solution = " + LongestCommonSubsequence.memoizedLongestCommonSubsequence("axyz", "baz"));
+        System.out.println("*************");
+//        System.out.println(Recursion.countBinaryStringsOfLength(8));
+        Recursion.printBinaryStringsOfLength(3);
+    }
+}
+
+
+class Recursion {
+    static int max(int[] nums) {
+        return max(nums, nums.length - 1);
+    }
+
+    private static int max(int[] nums, int i) {
+        if (i == 0) return nums[0];
+        return Math.max(nums[i], max(nums, i - 1));
+    }
+
+    static boolean isSorted(int[] nums) {
+        return isSorted(nums, 0);
+    }
+
+    private static boolean isSorted(int[] nums, int i) {
+        if (i == nums.length - 1) return true;
+
+        if (nums[i + 1] >= nums[i] && isSorted(nums, i + 1)) {
+            return true;
+        }
+        return false;
+    }
+
+    static void printDecreasingFrom(int n) {
+        if (n == 0) return;
+
+        printDecreasingFrom(n - 1);
+        System.out.println(n);
+    }
+
+    static int power(int base, int power) {
+        if (power == 1) return base;
+        return base * power(base, power - 1);
+    }
+
+    static int tilingProblem(int n) { // 4 x n tiles
+        if (n <= 3) {
+            return 1;
+        }
+
+        int hori = tilingProblem(n - 4);
+        int verti = tilingProblem(n - 1);
+        return hori + verti;
+    }
+
+    static int countBinaryStringsOfLength(int n) {
+        if(n == 1) return 2;
+        return countBinaryStringsOfLength(n - 1) + countBinaryStringsOfLength(n - 1);
+    }
+
+}
+
+
 class Fibonacci {
     static int fibonacciMemoization(int n) {
         return fibonacciMemoization(n, null);
@@ -77,12 +145,27 @@ class LongestCommonSubsequence {
     }
 }
 
-public class DynamicProgrammingProblems {
 
-    public static void main(String[] args) {
-        System.out.println("Memoized solution = " + LongestCommonSubsequence.longestCommonSubsequence("axyz", "baz"));
-        System.out.println("Tabulation solution = " + LongestCommonSubsequence.memoizedLongestCommonSubsequence("axyz", "baz"));
-
+class Knapsack {
+    static int unweighted(int[] weights, int capacity) {
+        if (Arrays.stream(weights).sum() < capacity) return 0;
+        return unweighted(weights, capacity, weights.length - 1);
     }
 
+    private static int unweighted(int[] w, int c, int i) {
+        if (c == 0 || i < 0) return 0;
+
+        if (w[i] <= c) {
+            int included = 1 + unweighted(w, c - w[i], i - 1);
+            int notIncluded = unweighted(w, c, i - 1);
+            return Math.max(included, notIncluded);
+        } else {
+            return unweighted(w, c, i - 1);
+        }
+    }
+
+    static void generateSubsets(int[] nums) {
+
+
+    }
 }
