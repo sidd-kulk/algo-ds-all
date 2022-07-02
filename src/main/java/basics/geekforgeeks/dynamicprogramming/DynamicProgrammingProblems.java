@@ -1,6 +1,9 @@
 package basics.geekforgeeks.dynamicprogramming;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 
 public class DynamicProgrammingProblems {
@@ -10,7 +13,8 @@ public class DynamicProgrammingProblems {
 //        System.out.println("Tabulation solution = " + LongestCommonSubsequence.memoizedLongestCommonSubsequence("axyz", "baz"));
         System.out.println("*************");
 //        System.out.println(Recursion.countBinaryStringsOfLength(8));
-        Recursion.printBinaryStringsOfLength(3);
+//        Recursion.subsets("abc");
+        Recursion.subsets(Arrays.asList(1,2,3));
     }
 }
 
@@ -61,10 +65,41 @@ class Recursion {
     }
 
     static int countBinaryStringsOfLength(int n) {
-        if(n == 1) return 2;
+        if (n == 1) return 2;
         return countBinaryStringsOfLength(n - 1) + countBinaryStringsOfLength(n - 1);
     }
 
+
+    static void subsets(String s) {
+        subsets(s, "", 0);
+    }
+
+    static void subsets(String s, String curr, int i) {
+        if (i == s.length()) {
+            System.out.println(curr);
+            return;
+        }
+
+        subsets(s, curr, i + 1);
+        subsets(s, curr + s.charAt(i), i + 1);
+    }
+
+    static void subsets(List<Integer> l) {
+        subsets(l, new ArrayList<>(), 0);
+    }
+
+    static void subsets(List<Integer> l, List<Integer> currList, int i) {
+        if (i == l.size()) {
+            System.out.println(currList);
+            return;
+        }
+
+        currList.add(l.get(i));
+        subsets(l, currList, i + 1);
+
+        if(i >= currList.size()) currList.remove(i);
+        subsets(l, currList, i + 1);
+    }
 }
 
 
