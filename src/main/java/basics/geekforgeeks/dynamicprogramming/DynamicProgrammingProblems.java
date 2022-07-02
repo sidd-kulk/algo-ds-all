@@ -18,7 +18,6 @@ public class DynamicProgrammingProblems {
     }
 }
 
-
 class Recursion {
     static int max(int[] nums) {
         return max(nums, nums.length - 1);
@@ -102,7 +101,6 @@ class Recursion {
     }
 }
 
-
 class Fibonacci {
     static int fibonacciMemoization(int n) {
         return fibonacciMemoization(n, null);
@@ -180,7 +178,6 @@ class LongestCommonSubsequence {
     }
 }
 
-
 class Knapsack {
     static int unweighted(int[] weights, int capacity) {
         if (Arrays.stream(weights).sum() < capacity) return 0;
@@ -201,6 +198,31 @@ class Knapsack {
 
     static void generateSubsets(int[] nums) {
 
+
+    }
+}
+
+class DPProblems {
+    int minimumCuts(int[] coins, int n, Integer[] memo){
+
+        if(memo[n] != null) {
+            return memo[n];
+        }
+
+        if(n == 0) return 0;
+
+        int minCuts = Integer.MAX_VALUE;
+
+        // rec
+        for(int i=0;i<coins.length;i++){
+            int rem = n - coins[i];
+            if(rem >= 0){
+                int min = 1 + minimumCuts(coins, rem, memo);
+                if(min > 0) minCuts = Math.min(minCuts, min);
+            }
+        }
+        memo[n] =  minCuts == Integer.MAX_VALUE ? -1 : minCuts;
+        return memo[n];
 
     }
 }
