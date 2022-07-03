@@ -14,7 +14,7 @@ public class DynamicProgrammingProblems {
         System.out.println("*************");
 //        System.out.println(Recursion.countBinaryStringsOfLength(8));
 //        Recursion.subsets("abc");
-        Recursion.subsets(Arrays.asList(1,2,3));
+        Recursion.subsets(Arrays.asList(1, 2, 3));
     }
 }
 
@@ -96,7 +96,7 @@ class Recursion {
         currList.add(l.get(i));
         subsets(l, currList, i + 1);
 
-        if(i >= currList.size()) currList.remove(i);
+        if (i >= currList.size()) currList.remove(i);
         subsets(l, currList, i + 1);
     }
 }
@@ -200,28 +200,67 @@ class Knapsack {
 
 
     }
+
+    static int zeroOneKnapsack(int[] weights, int[] values, int capacity) {
+        return zeroOneKnapsack(weights, values, capacity, weights.length - 1);
+    }
+
+    private static int zeroOneKnapsack(int[] w, int[] v, int c, int i) {
+        if (c == 0 || i < 0) return 0;
+
+        if (w[i] > c) {
+            return zeroOneKnapsack(w, v, c, i - 1);
+        } else {
+            int included = v[i] + zeroOneKnapsack(w, v, c - w[i], i - 1);
+            int notIncluded = zeroOneKnapsack(w, v, c, i - 1);
+            return Math.max(included, notIncluded);
+        }
+    }
+
+    private static int knapsackMemoized (int[]w, int[]v, int c, int i, Integer[][] memo)
+    {
+        if (c == 0 || i < 0)
+            return 0;
+
+        if(memo[i][c] != null){
+            return memo[i][c];
+        }
+
+        if (w[i] <= c)
+        {
+            int included = v[i] + knapsackMemoized (w, v, c - w[i], i - 1, memo);
+            int notIncluded = knapsackMemoized (w, v, c, i - 1, memo);
+            memo[i][c] = Math.max (included, notIncluded);
+            return memo[i][c];
+        }
+        else
+        {				// w[i] > c
+            memo[i][c] =  knapsackMemoized (w, v, c, i - 1, memo);
+            return memo[i][c];
+        }
+    }
 }
 
 class DPProblems {
-    int minimumCuts(int[] coins, int n, Integer[] memo){
+    int minimumCuts(int[] coins, int n, Integer[] memo) {
 
-        if(memo[n] != null) {
+        if (memo[n] != null) {
             return memo[n];
         }
 
-        if(n == 0) return 0;
+        if (n == 0) return 0;
 
         int minCuts = Integer.MAX_VALUE;
 
         // rec
-        for(int i=0;i<coins.length;i++){
+        for (int i = 0; i < coins.length; i++) {
             int rem = n - coins[i];
-            if(rem >= 0){
+            if (rem >= 0) {
                 int min = 1 + minimumCuts(coins, rem, memo);
-                if(min > 0) minCuts = Math.min(minCuts, min);
+                if (min > 0) minCuts = Math.min(minCuts, min);
             }
         }
-        memo[n] =  minCuts == Integer.MAX_VALUE ? -1 : minCuts;
+        memo[n] = minCuts == Integer.MAX_VALUE ? -1 : minCuts;
         return memo[n];
 
     }
