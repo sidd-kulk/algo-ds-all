@@ -5,20 +5,22 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class StringProblems {
     public static void main(String[] args) {
-        System.out.println(RepeatingCharacters.indexOfLeftMostRepeatingCharacter("abcd"));
+        System.out.println(RepeatingCharacters.indexOfLeftMostRepeatingCharacter("abbcdd"));
     }
 }
 
 class RepeatingCharacters {
     static int indexOfLeftMostRepeatingCharacter(String s) {
-        return indexOfLeftMostRepeatingCharacterBruteForceDoubleIteration(s);
+        if (s == null || s.length() <= 1) return -1;
+        return usingAsciiAsCounter(s);
     }
 
-    private static int indexOfLeftMostRepeatingCharacterBruteForceDoubleIteration(String s) {
+    private static int usingBruteForceDoubleIteration(String s) {
         int index = -1;
 
         for (int i = 0; i < s.length(); i++) {
@@ -28,6 +30,35 @@ class RepeatingCharacters {
         }
 
         return index;
+    }
+
+    private static int usingMapCounter(String s) {
+        Map<Character, Integer> counterMap = new LinkedHashMap<Character, Integer>();
+        for (Character c : s.toCharArray()) {
+            Integer count = counterMap.getOrDefault(c, 0);
+            counterMap.put(c, ++count);
+        }
+
+        int res = -1;
+        System.out.println(counterMap);
+        for (Map.Entry entry : counterMap.entrySet()) {
+            res++;
+            if (entry.getValue() != null && (Integer) entry.getValue() > 1) return res;
+        }
+        return res;
+    }
+
+    private static int usingAsciiAsCounter(String s) {
+        int[] counts = new int[256];
+
+        for (int i = 0; i < s.length(); i++) {
+            counts[s.charAt(i)]++;
+        }
+
+        for (int i = 0; i < s.length(); i++) {
+            if(counts[s.charAt(i)] > 1) return i;
+        }
+        return -1;
     }
 }
 
