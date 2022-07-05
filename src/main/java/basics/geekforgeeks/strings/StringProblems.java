@@ -8,12 +8,29 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class StringProblems {
-
-
     public static void main(String[] args) {
-
+        System.out.println(RepeatingCharacters.indexOfLeftMostRepeatingCharacter("abcd"));
     }
 }
+
+class RepeatingCharacters {
+    static int indexOfLeftMostRepeatingCharacter(String s) {
+        return indexOfLeftMostRepeatingCharacterBruteForceDoubleIteration(s);
+    }
+
+    private static int indexOfLeftMostRepeatingCharacterBruteForceDoubleIteration(String s) {
+        int index = -1;
+
+        for (int i = 0; i < s.length(); i++) {
+            for (int j = i + 1; j < s.length(); j++) {
+                if (s.charAt(i) == s.charAt(j)) return i;
+            }
+        }
+
+        return index;
+    }
+}
+
 
 class PrintStrings {
     static void printFrequency(String str) {
