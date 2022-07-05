@@ -12,4 +12,11 @@ public class Utils {
     public static int min(int... nums) {
         return Arrays.stream(nums).min().orElseThrow();
     }
+
+    public static String sortString(String s) {
+        return s.chars().sorted()
+                .collect(StringBuilder::new,
+                        StringBuilder::appendCodePoint,
+                        StringBuilder::append).toString();
+    }
 }
