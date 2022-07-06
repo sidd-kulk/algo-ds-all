@@ -10,55 +10,58 @@ import java.util.Map;
 
 public class StringProblems {
     public static void main(String[] args) {
-        System.out.println(RepeatingCharacters.indexOfLeftMostRepeatingCharacter("abbcdd"));
+        System.out.println(RepeatingCharacters.LeftMostRepeatingCharacter.indexOfLeftMostRepeatingCharacter("abbcdd"));
     }
 }
 
 class RepeatingCharacters {
-    static int indexOfLeftMostRepeatingCharacter(String s) {
-        if (s == null || s.length() <= 1) return -1;
-        return usingAsciiAsCounter(s);
-    }
 
-    private static int usingBruteForceDoubleIteration(String s) {
-        int index = -1;
+    static class LeftMostRepeatingCharacter {
+        static int indexOfLeftMostRepeatingCharacter(String s) {
+            if (s == null || s.length() <= 1) return -1;
+            return usingAsciiAsCounter(s);
+        }
 
-        for (int i = 0; i < s.length(); i++) {
-            for (int j = i + 1; j < s.length(); j++) {
-                if (s.charAt(i) == s.charAt(j)) return i;
+        private static int usingBruteForceDoubleIteration(String s) {
+            int index = -1;
+
+            for (int i = 0; i < s.length(); i++) {
+                for (int j = i + 1; j < s.length(); j++) {
+                    if (s.charAt(i) == s.charAt(j)) return i;
+                }
             }
+
+            return index;
         }
 
-        return index;
-    }
+        private static int usingMapCounter(String s) {
+            Map<Character, Integer> counterMap = new LinkedHashMap<Character, Integer>();
+            for (Character c : s.toCharArray()) {
+                Integer count = counterMap.getOrDefault(c, 0);
+                counterMap.put(c, ++count);
+            }
 
-    private static int usingMapCounter(String s) {
-        Map<Character, Integer> counterMap = new LinkedHashMap<Character, Integer>();
-        for (Character c : s.toCharArray()) {
-            Integer count = counterMap.getOrDefault(c, 0);
-            counterMap.put(c, ++count);
+            int res = -1;
+            System.out.println(counterMap);
+            for (Map.Entry entry : counterMap.entrySet()) {
+                res++;
+                if (entry.getValue() != null && (Integer) entry.getValue() > 1) return res;
+            }
+            return res;
         }
 
-        int res = -1;
-        System.out.println(counterMap);
-        for (Map.Entry entry : counterMap.entrySet()) {
-            res++;
-            if (entry.getValue() != null && (Integer) entry.getValue() > 1) return res;
-        }
-        return res;
-    }
+        private static int usingAsciiAsCounter(String s) {
+            int[] counts = new int[256];
 
-    private static int usingAsciiAsCounter(String s) {
-        int[] counts = new int[256];
+            for (int i = 0; i < s.length(); i++) {
+                counts[s.charAt(i)]++;
+            }
 
-        for (int i = 0; i < s.length(); i++) {
-            counts[s.charAt(i)]++;
+            for (int i = 0; i < s.length(); i++) {
+                if (counts[s.charAt(i)] > 1) return i;
+            }
+            return -1;
         }
-
-        for (int i = 0; i < s.length(); i++) {
-            if(counts[s.charAt(i)] > 1) return i;
-        }
-        return -1;
     }
 }
 
