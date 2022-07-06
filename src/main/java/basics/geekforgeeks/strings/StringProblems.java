@@ -4,13 +4,12 @@ import basics.Utils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class StringProblems {
     public static void main(String[] args) {
-        System.out.println(RepeatingCharacters.LeftMostRepeatingCharacter.indexOfLeftMostRepeatingCharacter("abbcdd"));
+        System.out.println(RepeatingCharacters.LeftMostNonRepeatingCharacter.indexOfLeftMostNonRepeatingCharacter("geekforgeeks"));
     }
 }
 
@@ -61,6 +60,63 @@ class RepeatingCharacters {
                 if (counts[s.charAt(i)] > 1) return i;
             }
             return -1;
+        }
+    }
+
+    static class LeftMostNonRepeatingCharacter {
+        static int indexOfLeftMostNonRepeatingCharacter(String s) {
+            if (s == null) return -1;
+            if (s.length() == 1) return 0;
+            return usingEfficientCounterOneIteration(s);
+        }
+
+        private static int usingBruteForceDoubleIteration(String s) {
+            int length = s.length();
+            for (int i = 0; i < length; i++) {
+                boolean didRepeat = false;
+                for (int j = 0; j < length; j++) {
+                    if (i != j && s.charAt(i) == s.charAt(j)) {
+                        didRepeat = true;
+                        break;
+                    }
+                }
+                if (!didRepeat) return i;
+
+            }
+            return -1;
+        }
+
+        private static int usingEfficientCounterTwoIterations(String s) {
+            int[] counts = new int[256];
+            int length = s.length();
+            for (int i = 0; i < length; i++) {
+                counts[s.charAt(i)]++;
+            }
+
+            for (int i = 0; i < length; i++) {
+                if (counts[s.charAt(i)] == 1) return i;
+            }
+            return -1;
+        }
+
+        private static int usingEfficientCounterOneIteration(String s) {
+            int[] indexes = new int[256];
+            Arrays.fill(indexes, -1);
+            int length = s.length();
+            for (int i = 0; i < length; i++) {
+                if (indexes[s.charAt(i)] == -1) {
+                    indexes[s.charAt(i)] = i;
+                } else {
+                    indexes[s.charAt(i)] = Integer.MIN_VALUE;
+                }
+            }
+
+            int result = Integer.MAX_VALUE;
+            for (int i = 0; i < indexes.length; i++) {
+                if (indexes[i] >= 0) result = Math.min(result, indexes[i]);
+            }
+
+            return result == Integer.MAX_VALUE ? -1 : result;
         }
     }
 }
