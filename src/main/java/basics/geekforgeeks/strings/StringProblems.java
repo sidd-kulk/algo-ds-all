@@ -3,9 +3,7 @@ package basics.geekforgeeks.strings;
 import basics.Utils;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 public class StringProblems {
     public static void main(String[] args) {
@@ -121,6 +119,14 @@ class RepeatingCharacters {
     }
 }
 
+class StringReversal {
+    static String reverse(String s) {
+        if (s == null || s.length() == 1) return s;
+
+        // TODO
+        return "";
+    }
+}
 
 class PrintStrings {
     static void printFrequency(String str) {
@@ -224,3 +230,60 @@ class Anagram {
         return Arrays.stream(counts).allMatch(i -> i == 0);
     }
 }
+
+class Line {
+    private Set<Point> pointsOnLine;
+
+    Line(Set<Point> points) {
+        if (points == null || points.size() < 2) throw new IllegalArgumentException("Line contains at least 2 points");
+        if (!valid()) {
+            throw new RuntimeException("Points are not collinear");
+        }
+        this.pointsOnLine = points;
+    }
+
+    void addPoint(Point p) {
+        pointsOnLine.add(p);
+        if (!valid()) {
+            pointsOnLine.remove(p);
+            throw new RuntimeException("New Point is not collinear");
+        }
+    }
+
+    double slope() {
+        Point p1 = null, p2 = null;
+        for (Point p : pointsOnLine) {
+            if (p1 == null) {
+                p1 = p;
+                continue;
+            }
+
+            if (p2 == null) {
+                p2 = p;
+                continue;
+            }
+
+            if (p1 != null && p2 != null) break;
+        }
+
+        return Math.abs((p1.getY() - p2.getY()) / (p1.getX() - p2.getX()));
+    }
+
+    private boolean valid() {
+        if (pointsOnLine.size() == 2) return true;
+        Point[] ps = new Point[pointsOnLine.size()];
+        ps = pointsOnLine.toArray(ps);
+        for (Point p : ps) {
+
+        }
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return "Line{" +
+                "pointsOnLine=" + pointsOnLine +
+                '}';
+    }
+}
+
