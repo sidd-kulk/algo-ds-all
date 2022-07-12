@@ -1,5 +1,7 @@
 package basics.geekforgeeks.graphs;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -8,7 +10,18 @@ public class GraphRepresentations {
 
     }
 
+    static void testConnectedComponents(){
+        var al = getDefaultTestData();
+        System.out.println("\n"+al.connectedComponentsCount());
+    }
+
     static void testBFS() {
+        AdjacencyList al = getDefaultTestData();
+        System.out.println(al);
+        al.bfsTraversal();
+    }
+
+    private static AdjacencyList getDefaultTestData() {
         AdjacencyList al = new AdjacencyList(4);
         al.addEdge(0, 1);
         al.addEdge(0, 2);
@@ -16,8 +29,9 @@ public class GraphRepresentations {
         al.addEdge(1, 3);
         al.addEdge(2, 3);
         al.addVertex();
-        System.out.println(al);
-        al.bfsTraversal();
+        al.addVertex();
+        al.addEdge(4, 5);
+        return al;
     }
 }
 
@@ -81,6 +95,19 @@ class AdjacencyList {
             }
 
         }
+    }
+
+    int connectedComponentsCount() { // Number of Islands
+        int count = 0;
+        Set<Integer> visitedVertices = new HashSet<>();
+        int size = this.list.size();
+        for (int i = 0; i < size; i++) {// Because of disconnected vertices
+            if (!visitedVertices.contains(i)) {
+                this.bfsTraversal(i, visitedVertices);
+                count++;
+            }
+        }
+        return count;
     }
 
     @Override
