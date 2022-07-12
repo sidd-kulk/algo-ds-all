@@ -7,12 +7,24 @@ import java.util.stream.Collectors;
 
 public class GraphRepresentations {
     public static void main(String[] args) {
-
+        testConnectedComponents();
     }
 
-    static void testConnectedComponents(){
+    private static void testDFS() {
+        var al = new AdjacencyList(7);
+        al.addEdge(0, 1);
+        al.addEdge(1, 2);
+        al.addEdge(2, 3);
+        al.addEdge(0, 4);
+        al.addEdge(4, 5);
+        al.addEdge(5, 6);
+        al.dfsTraversal();
+    }
+
+    static void testConnectedComponents() {
         var al = getDefaultTestData();
-        System.out.println("\n"+al.connectedComponentsCount());
+        System.out.println("\n" + al.connectedComponentsCount(false));
+        System.out.println("\n" + al.connectedComponentsCount(true));
     }
 
     static void testBFS() {
@@ -97,23 +109,47 @@ class AdjacencyList {
         }
     }
 
-    int connectedComponentsCount() { // Number of Islands
+    int connectedComponentsCount(boolean usingDFS) { // Number of Islands
         int count = 0;
         Set<Integer> visitedVertices = new HashSet<>();
         int size = this.list.size();
         for (int i = 0; i < size; i++) {// Because of disconnected vertices
             if (!visitedVertices.contains(i)) {
-                this.bfsTraversal(i, visitedVertices);
+                if(usingDFS) {
+                    this.dfsTraversal(i, visitedVertices);
+                } else {
+                    this.bfsTraversal(i, visitedVertices);
+                }
                 count++;
             }
         }
         return count;
     }
 
+    void dfsTraversal() {
+        Set<Integer> visitedVertices = new HashSet<>();
+        int size = this.list.size();
+        for (int i = 0; i < size; i++) {
+            if (!visitedVertices.contains(i)) { // For disconnected graph
+                dfsTraversal(i, visitedVertices);
+            }
+        }
+    }
+
+    private void dfsTraversal(Integer source, Set<Integer> visitedVertices) {
+        if (visitedVertices.size() == this.list.size()) return; // Not needed as such, but for standardization
+        System.out.print(source + " ,");
+        visitedVertices.add(source);
+        var adjacentVerticesOfSource = this.list.get(source);
+
+        for (Integer child : adjacentVerticesOfSource) {
+            if (!visitedVertices.contains(child)) dfsTraversal(child, visitedVertices);
+        }
+    }
+
     @Override
     public String toString() {
-        return "AdjacencyList{" +
-                "list=" + list.stream().filter(i -> i.size() > 0).collect(Collectors.toList()) +
+        return "AdjacencyList{" + "list=" + list.stream().filter(i -> i.size() > 0).collect(Collectors.toList()) +
 //                "list=" + list +
                 '}';
     }
