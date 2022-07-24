@@ -14,8 +14,8 @@ import kotlin.random.Random
 import kotlin.system.exitProcess
 
 class TreeNode(var `val`: Int) {
-    var left: TreeNode? = null
-    var right: TreeNode? = null
+    public var left: TreeNode? = null
+    public var right: TreeNode? = null
 
     override fun toString(): String {
         return `val`.toString()
